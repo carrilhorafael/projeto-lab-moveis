@@ -1,5 +1,6 @@
 class Pet {
   String id;
+  String ownerId;
   String name;
   String description;
   String species;
@@ -9,6 +10,7 @@ class Pet {
 
   Pet({
     required this.id,
+    required this.ownerId,
     required this.name,
     this.description = "",
     required this.species,
