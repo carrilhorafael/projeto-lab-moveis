@@ -1,4 +1,16 @@
-// NOTE This entity may note be needed.
-// it depends on how chat is implemented.
+import 'package:projeto_lab/domain/entities/user.dart';
 
-class Message {}
+class Message {
+  String interestId;
+  String senderId = "";
+  String content;
+
+  Message({
+    required this.interestId,
+    required this.content,
+  });
+
+  bool isFrom(User user) {
+    return senderId == user.id;
+  }
+}
