@@ -1,8 +1,18 @@
-// TODO add methods to handle State creation
-//  and helper methods to list the available states.
+import 'dart:convert';
+
+// TODO add helper methods to list the available states.
 class State {
   final String name;
   final String abbreviation;
+
+  State(this.name, this.abbreviation) {
+    final isValid = validStates.any((element) =>
+        element.abbreviation == abbreviation && element.name == name);
+
+    if (!isValid) {
+      throw new ArgumentError("($name, $abbreviation) is not a valid state");
+    }
+  }
 
   const State._(this.name, this.abbreviation);
 
@@ -35,4 +45,22 @@ class State {
     State._("Sergipe", "SE"),
     State._("Tocantins", "TO")
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'abbreviation': abbreviation,
+    };
+  }
+
+  factory State.fromMap(Map<String, dynamic> map) {
+    return State._(
+      map['name'],
+      map['abbreviation'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory State.fromJson(String source) => State.fromMap(json.decode(source));
 }
