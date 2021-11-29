@@ -1,11 +1,25 @@
 import 'package:projeto_lab/domain/entities/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class UserService {
-  void create(User user);
+class UserService {
+  final FirebaseFirestore store;
 
-  User find(String id);
+  UserService(this.store);
 
-  void update(User user);
+  Future<void> create(User user) {
+    var users = this.store.collection("users");
+    return users.add(user.toMap()).then((value) => {user.id = value.id});
+  }
 
-  void delete(String id);
+  User find(String id) {
+    throw new UnimplementedError();
+  }
+
+  void update(User user) {
+    throw new UnimplementedError();
+  }
+
+  void delete(String id) {
+    throw new UnimplementedError();
+  }
 }
