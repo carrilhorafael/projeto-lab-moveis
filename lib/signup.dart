@@ -20,21 +20,39 @@ class SignupForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text("Crie uma conta"),
-        TextInput("Nome", "Digite seu nome completo")
+        MainTextInput("Nome", "Digite seu nome completo"),
+        MainTextInput("Email", "Digite seu email"),
+        MainTextInput("Senha", "Digite sua senha"),
+        MainTextInput("Confirmar sua senha", "Confirme sua senha"),
+        MainTextInput("Telefone", "Digite seu telefone"),
+        ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
       ]
     );
   }
 }
 
-class TextInput extends StatelessWidget {
+class MainTextInput extends StatelessWidget {
 
-  final String label;
-  final String placeholder;
+  final String _label;
+  final String _hintText;
 
-  TextInput(this.label, this.placeholder);
+  MainTextInput(this._label, this._hintText);
 
   @override 
   Widget build(BuildContext context) {
-    return TextFormField();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget> [
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: _label,
+              hintText: _hintText
+            )
+          ),
+        ]
+      )
+    );
   }
 }
