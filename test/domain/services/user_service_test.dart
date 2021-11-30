@@ -1,4 +1,5 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:faker/faker.dart' hide Address;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:projeto_lab/domain/entities/location/address.dart';
@@ -9,13 +10,13 @@ import 'package:projeto_lab/domain/services/user_service.dart';
 
 User validUser() {
   return User(
-      name: "Canellas",
+      name: faker.person.name(),
       address: Address(
-          postalCode: "202020",
-          address: "Amaral Peixoto",
+          postalCode: faker.randomGenerator.numberOfLength(10),
+          address: faker.address.streetName(),
           state: State("Acre", "AC")),
-      email: "email",
-      phone: "adwad");
+      email: faker.internet.email(),
+      phone: faker.phoneNumber.us());
 }
 
 Future<void> main() async {
