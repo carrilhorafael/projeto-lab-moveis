@@ -1,12 +1,12 @@
 import 'package:projeto_lab/domain/entities/pet.dart';
 
 class SearchOptions {
-  int maxAge;
+  double maxAge;
 
   /// In km
   double maxDistance;
 
-  Set<Size> size = {};
+  Set<Size?> size = {};
 
   Set<String> races = {};
 
