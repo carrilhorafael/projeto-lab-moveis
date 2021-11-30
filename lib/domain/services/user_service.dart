@@ -42,7 +42,7 @@ class UserService {
     await snapshot.reference.update(user.toMap());
   }
 
-  void delete(String id) {
-    throw new UnimplementedError();
+  Future<void> delete(String id) {
+    return _collection().doc(id).delete();
   }
 }

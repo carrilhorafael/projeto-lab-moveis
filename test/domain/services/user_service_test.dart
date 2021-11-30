@@ -59,4 +59,19 @@ Future<void> main() async {
     final fromServer = await service.find(user.id);
     expect(user.name, fromServer.name);
   });
+
+  test("delete works...", () async {
+    final store = FakeFirebaseFirestore();
+    final service = UserService(store);
+    final user = validUser();
+    await service.create(user);
+
+    final id = user.id;
+    await service.delete(id);
+
+    expect(service.find(id), throwsA(isA<NotFoundException>()));
+
+    // Deleting a non-existing object should work just fine.
+    await service.delete("404");
+  });
 }
