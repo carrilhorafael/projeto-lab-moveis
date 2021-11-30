@@ -44,4 +44,19 @@ Future<void> main() async {
     expect(() async => await service.find("404"),
         throwsA(TypeMatcher<NotFoundException>()));
   });
+
+  test("update works...", () async {
+    final store = FakeFirebaseFirestore();
+    final service = UserService(store);
+
+    final user = validUser();
+    await service.create(user);
+
+    user.name = "A different Name";
+
+    await service.update(user);
+
+    final fromServer = await service.find(user.id);
+    expect(user.name, fromServer.name);
+  });
 }

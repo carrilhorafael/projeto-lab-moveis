@@ -37,6 +37,11 @@ class UserService {
     return await _collection().doc(id).get();
   }
 
+  Future<void> update(User user) async {
+    final snapshot = await _fetchSnapshot(user.id);
+    await snapshot.reference.update(user.toMap());
+  }
+
   void delete(String id) {
     throw new UnimplementedError();
   }
