@@ -25,7 +25,10 @@ class SignupForm extends StatelessWidget {
         MainTextInput("Senha", "Digite sua senha"),
         MainTextInput("Confirmar sua senha", "Confirme sua senha"),
         MainTextInput("Telefone", "Digite seu telefone"),
-        ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+          child: ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
+        )
       ]
     );
   }
