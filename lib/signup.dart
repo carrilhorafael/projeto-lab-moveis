@@ -2,17 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 
-class SignupPage extends StatelessWidget {
+class SignupPageFirst extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
       appBar: AppBar(),
-      body: Container()
+      body: Container(
+        child: Column(
+          children: <Widget> [
+            Text("Entre com suas contas"),
+            Row(children: <Widget> [
+            //TODO Botões de Login com Google e Facebook
+            ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Center(child: Text("OU"))
+            ),
+            SignupFormFirst()
+
+          ]
+        )
+      )
     );
   }
   
 }
-class SignupForm extends StatelessWidget {
+class SignupFormFirst extends StatelessWidget {
 
   final TextEditingController _controllerNameField = TextEditingController();
   final TextEditingController _controllerEmailField = TextEditingController();
@@ -34,7 +49,14 @@ class SignupForm extends StatelessWidget {
           MainTextInput("Telefone", "Digite seu telefone", _controllerPhoneField),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-            child: ElevatedButton(onPressed: () {}, child: const Text("Continuar"))
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SignupPageSecond();
+                }));
+              }, 
+              child: const Text("Continuar")
+            )
           )
         ]
       )
