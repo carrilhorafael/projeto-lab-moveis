@@ -1,13 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 
-abstract class PetService {
-  void create(Pet pet);
+class PetService {
+  final FirebaseFirestore store;
 
-  Pet find(String id);
+  PetService(this.store);
 
-  void update(Pet pet);
+  Future<void> create(Pet pet) {
+    throw UnimplementedError();
+  }
 
-  void delete(String id);
+  Future<Pet> find(String id) {
+    throw UnimplementedError();
+  }
 
-  List<Pet> ownedBy(String userId);
+  Future<void> update(Pet pet) {
+    throw UnimplementedError();
+  }
+
+  Future<void> delete(String id) {
+    throw UnimplementedError();
+  }
+
+  Future<List<Pet>> ownedBy(String userId) {
+    throw UnimplementedError();
+  }
 }
