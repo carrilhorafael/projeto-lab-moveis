@@ -17,8 +17,6 @@ class UserService {
   Future<User> find(String id) async {
     final snapshot = await _fetchSnapshot(id);
     final user = snapshot.data()!;
-    user.id = snapshot.id;
-
     return user;
   }
 
@@ -28,7 +26,9 @@ class UserService {
           if (!snapshot.exists) {
             throw NotFoundException();
           }
-          return User.fromMap(snapshot.data()!);
+          final map = snapshot.data()!;
+          map['id'] = snapshot.id;
+          return User.fromMap(map);
         },
         toFirestore: (user, _) => user.toMap());
   }
