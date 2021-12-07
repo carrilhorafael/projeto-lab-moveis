@@ -74,5 +74,18 @@ Future<void> main() async {
       // another field which hasn't changed
       expect(anotherRef.species, pet.species);
     });
+
+    test("delete", () async {
+      await petService.create(pet);
+
+      await petService.delete(pet.id);
+
+      // We shouldn't be able to retrieve the record after being deleted
+      expect(() async => await petService.find(pet.id),
+          throwsA(isA<NotFoundException>()));
+
+      // Deletion of an invalid id should work fine.
+      await petService.delete("404");
+    });
   });
 }
