@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:faker/faker.dart' hide Address;
 import 'package:flutter_test/flutter_test.dart';
@@ -20,58 +21,60 @@ User validUser() {
 }
 
 Future<void> main() async {
-  test("create works...", () async {
-    final fake = FakeFirebaseFirestore();
-    final service = UserService(fake);
+  group("User Service", () {
+    late FirebaseFirestore fake;
+    late UserService service;
+    late User user;
 
-    final user = validUser();
-    await service.create(user);
-    assert(user.id.length > 0);
-  });
+    setUp(() {
+      fake = FakeFirebaseFirestore();
+      service = UserService(fake);
+      user = validUser();
+    });
 
-  test("find works...", () async {
-    // Setup
-    final store = FakeFirebaseFirestore();
-    var data = validUser();
-    final ref = await store.collection("users").add(data.toMap());
+    test("create", () async {
+      await service.create(user);
+      assert(user.id.length > 0);
+    });
 
-    final service = UserService(store);
-    final user = await service.find(ref.id);
+    test("find", () async {
+      // Setup
+      final store = fake;
+      var data = validUser();
+      final ref =
+          await store.collection(UserService.collectionName).add(data.toMap());
 
-    // Assertions
-    assert(user.name == data.name);
+      final service = UserService(store);
+      final user = await service.find(ref.id);
 
-    expect(() async => await service.find("404"),
-        throwsA(TypeMatcher<NotFoundException>()));
-  });
+      // Assertions
+      assert(user.name == data.name);
 
-  test("update works...", () async {
-    final store = FakeFirebaseFirestore();
-    final service = UserService(store);
+      expect(() async => await service.find("404"),
+          throwsA(TypeMatcher<NotFoundException>()));
+    });
 
-    final user = validUser();
-    await service.create(user);
+    test("update", () async {
+      await service.create(user);
 
-    user.name = "A different Name";
+      user.name = "A different Name";
 
-    await service.update(user);
+      await service.update(user);
 
-    final fromServer = await service.find(user.id);
-    expect(user.name, fromServer.name);
-  });
+      final fromServer = await service.find(user.id);
+      expect(user.name, fromServer.name);
+    });
 
-  test("delete works...", () async {
-    final store = FakeFirebaseFirestore();
-    final service = UserService(store);
-    final user = validUser();
-    await service.create(user);
+    test("delete", () async {
+      await service.create(user);
 
-    final id = user.id;
-    await service.delete(id);
+      final id = user.id;
+      await service.delete(id);
 
-    expect(service.find(id), throwsA(isA<NotFoundException>()));
+      expect(service.find(id), throwsA(isA<NotFoundException>()));
 
-    // Deleting a non-existing object should work just fine.
-    await service.delete("404");
+      // Deleting a non-existing object should work just fine.
+      await service.delete("404");
+    });
   });
 }
