@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
+import 'package:projeto_lab/domain/services/exceptions/not_found_exception.dart';
 import 'package:projeto_lab/domain/services/pet_service.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';
 
@@ -22,23 +23,38 @@ Future<Pet> validPet(User user) async {
 Future<void> main() async {
   group("Pet Service", () {
     late FakeFirebaseFirestore fake;
-    late UserService userService;
-    late PetService petService;
 
-    setUp(() {
+    late UserService userService;
+    late User user;
+
+    late PetService petService;
+    late Pet pet;
+
+    setUp(() async {
       fake = FakeFirebaseFirestore();
+
       userService = UserService(fake);
+      user = validUser();
+      await userService.create(user);
+
       petService = PetService(fake, userService);
+      pet = await validPet(user);
     });
 
     test("create", () async {
-      final user = validUser();
-      await userService.create(user);
-      final pet = await validPet(user);
-
       await petService.create(pet);
       assert(pet.id != "");
       assert(pet.ownerId == user.id);
+    });
+
+    test("find", () async {
+      await petService.create(pet);
+
+      final anotherPet = await petService.find(pet.id);
+      expect(anotherPet.id, pet.id);
+
+      expect(() async => await petService.find("404"),
+          throwsA(isA<NotFoundException>()));
     });
   });
 }
