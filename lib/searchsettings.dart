@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Animal?> _selectedAnimals = convertListType(searchSettings.species.toList(),_animals);
   List<Object?> _selectedAnimals2 = convertListType2(searchSettings.races.toList(),_racas);
-  List<Tamanho?> _selectedAnimals3 = convertListType3(searchSettings.size.toList(),_tamanhos);
+  List<Tamanho?> _selectedAnimals3 = convertListType3(searchSettings.sizes.toList(),_tamanhos);
 
 
   final _multiSelectKey = GlobalKey<FormFieldState>();
@@ -463,7 +463,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Set<String> speciesSet = {};
                   Set<String> raceSet = {};
-                  Set<Size?> sizeSet = {};
+                  Set<Size> sizeSet = {};
 
                   for (Animal? animal in _selectedAnimals){
                     speciesSet.add(animal!.name);
@@ -484,11 +484,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   var myMapSize = {'Pequeno': Size.small, 'Médio': Size.medium, 'Grande': Size.big};
                   for (Tamanho? tamanho in _selectedAnimals3){
-                    sizeSet.add(myMapSize[tamanho!.name]);
+                    sizeSet.add(myMapSize[tamanho!.name]!);
                   }
 
                   //settingsRaca = _selectedAnimals2 as <Raca?>;
-                  searchSettings.size = sizeSet;
+                  searchSettings.sizes = sizeSet;
                   searchSettings.species = speciesSet;
                   searchSettings.races = raceSet;
                   //print(settingsRaca);

@@ -6,7 +6,7 @@ class SearchOptions {
   /// In km
   double maxDistance;
 
-  Set<Size?> size = {};
+  Set<Size> sizes = {};
 
   Set<String> races = {};
 
