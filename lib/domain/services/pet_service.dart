@@ -42,7 +42,7 @@ class PetService {
 
   Future<Pet> find(String id) async {
     final snapshot =
-        await _query().where(FieldPath.documentId, isEqualTo: id).get();
+        await query().where(FieldPath.documentId, isEqualTo: id).get();
 
     if (snapshot.docs.isEmpty) {
       throw NotFoundException();
@@ -56,14 +56,14 @@ class PetService {
     await snapshot.reference.update(pet.toMap());
   }
 
-  Query<Pet> _query() {
+  Query<Pet> query() {
     return store.collectionGroup(collectionName).withConverter(
         fromFirestore: _fromFirestore, toFirestore: _toFirestore);
   }
 
   Future<void> delete(String id) async {
     final snapshot =
-        await _query().where(FieldPath.documentId, isEqualTo: id).get();
+        await query().where(FieldPath.documentId, isEqualTo: id).get();
     if (snapshot.docs.isNotEmpty) {
       await snapshot.docs.first.reference.delete();
     }
