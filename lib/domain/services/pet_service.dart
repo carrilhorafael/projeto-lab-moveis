@@ -55,8 +55,9 @@ class PetService {
     }
   }
 
-  Future<void> update(Pet pet) {
-    throw UnimplementedError();
+  Future<void> update(Pet pet) async {
+    final snapshot = await collection(pet.ownerId).doc(pet.id).get();
+    await snapshot.reference.update(pet.toMap());
   }
 
   Future<void> delete(String id) {

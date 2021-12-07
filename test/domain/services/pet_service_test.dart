@@ -56,5 +56,23 @@ Future<void> main() async {
       expect(() async => await petService.find("404"),
           throwsA(isA<NotFoundException>()));
     });
+
+    test("update", () async {
+      await petService.create(pet);
+
+      pet.name = "Another name";
+      pet.age = 2;
+
+      await petService.update(pet);
+
+      final anotherRef = await petService.find(pet.id);
+
+      // fields that changed
+      expect(anotherRef.name, pet.name);
+      expect(anotherRef.age, pet.age);
+
+      // another field which hasn't changed
+      expect(anotherRef.species, pet.species);
+    });
   });
 }
