@@ -20,7 +20,7 @@ class UserService {
     return user;
   }
 
-  CollectionReference<User> _collection() {
+  CollectionReference<User> collection() {
     return this.store.collection(collectionName).withConverter<User>(
         fromFirestore: (snapshot, _) {
           if (!snapshot.exists) {
@@ -34,7 +34,7 @@ class UserService {
   }
 
   Future<DocumentSnapshot<User>> _fetchSnapshot(String id) async {
-    return await _collection().doc(id).get();
+    return await collection().doc(id).get();
   }
 
   Future<void> update(User user) async {
@@ -43,6 +43,6 @@ class UserService {
   }
 
   Future<void> delete(String id) {
-    return _collection().doc(id).delete();
+    return collection().doc(id).delete();
   }
 }
