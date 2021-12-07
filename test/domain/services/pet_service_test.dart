@@ -87,5 +87,23 @@ Future<void> main() async {
       // Deletion of an invalid id should work fine.
       await petService.delete("404");
     });
+
+    test("ownedBy", () async {
+      await petService.create(pet);
+      final another = await validPet(user);
+      await petService.create(another);
+
+      final pets = await petService.ownedBy(user.id);
+
+      expect(pets.length, 2);
+      assert(pets.any((el) => el.id == pet.id));
+      assert(pets.any((el) => el.id == another.id));
+
+      // A recently created user has no pets
+      final newUser = validUser();
+      await userService.create(newUser);
+      final noPets = await petService.ownedBy(newUser.id);
+      expect(noPets.length, 0);
+    });
   });
 }

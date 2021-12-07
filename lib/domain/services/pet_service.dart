@@ -31,7 +31,9 @@ class PetService {
     if (!snapshot.exists) {
       throw NotFoundException();
     }
-    return Pet.fromMap(snapshot.data()!);
+    final map = snapshot.data()!;
+    map['id'] = snapshot.id;
+    return Pet.fromMap(map);
   }
 
   Map<String, Object?> _toFirestore(Pet pet, SetOptions? options) {
@@ -45,10 +47,7 @@ class PetService {
     if (snapshot.docs.isEmpty) {
       throw NotFoundException();
     } else {
-      final first = snapshot.docs.first;
-      final pet = first.data();
-      pet.id = first.id;
-      return pet;
+      return snapshot.docs.first.data();
     }
   }
 
@@ -70,7 +69,9 @@ class PetService {
     }
   }
 
-  Future<List<Pet>> ownedBy(String userId) {
-    throw UnimplementedError();
+  Future<List<Pet>> ownedBy(String userId) async {
+    final snapshot = await collection(userId).get();
+
+    return snapshot.docs.map((e) => e.data()).toList();
   }
 }
