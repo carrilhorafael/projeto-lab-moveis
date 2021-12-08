@@ -25,7 +25,6 @@ class Pet {
 
   Map<String, dynamic> toMap() {
     return {
-      if (id != "") 'id': id,
       'ownerId': ownerId,
       'name': name,
       'description': description,

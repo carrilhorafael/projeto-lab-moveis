@@ -28,7 +28,6 @@ class Interest {
 
   Map<String, dynamic> toMap() {
     return {
-      if (id != "") 'id': id,
       'userId': userId,
       'petId': petId,
       'status': enumToString(status),
