@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:projeto_lab/domain/entities/pet.dart';
+import 'package:projeto_lab/util/enum.dart';
 
 class SearchOptions {
   double maxAge;
@@ -26,7 +27,7 @@ class SearchOptions {
     return {
       'maxAge': maxAge,
       'maxDistance': maxDistance,
-      'size': sizes.map((x) => x.toString().split('.')[1]).toList(),
+      'size': sizes.map((x) => enumToString(x)).toList(),
       'races': races.toList(),
       'species': species.toList(),
     };
