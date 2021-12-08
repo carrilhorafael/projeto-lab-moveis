@@ -9,9 +9,9 @@ class UserService {
 
   UserService(this.store);
 
-  Future<void> create(User user) {
-    var users = this.store.collection(collectionName);
-    return users.add(user.toMap()).then((value) => {user.id = value.id});
+  Future<void> create(User user) async {
+    final docRef = await collection().add(user);
+    user.id = docRef.id;
   }
 
   Future<User> find(String id) async {
