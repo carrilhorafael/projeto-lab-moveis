@@ -4,14 +4,13 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 
-SearchOptions searchSettings = SearchOptions(maxAge: 5,maxDistance: 9);
+SearchOptions searchSettings = SearchOptions(maxAge: 5, maxDistance: 9);
 
 class SearchPage extends StatelessWidget {
-  SearchPage({Key ?key}) : super(key: key);
+  SearchPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       //title: 'Configurações de busca',
       //theme: ThemeData(
       //primarySwatch: Colors.purple,
@@ -31,7 +30,6 @@ class Raca {
   });
 }
 
-
 class Tamanho {
   final String name;
   Size size;
@@ -48,6 +46,7 @@ class Animal {
     required this.name,
   });
 }
+
 /*
 class Animal {
   final int id;
@@ -61,7 +60,7 @@ class Animal {
 }
 */
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key ?key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -88,28 +87,21 @@ class _MyHomePageState extends State<MyHomePage> {
     Tamanho(name: "Pequeno", size: Size.small),
     Tamanho(name: "Médio", size: Size.medium),
     Tamanho(name: "Grande", size: Size.big),
-
   ];
-
-
 
   final _items = _animals
       .map((animal) => MultiSelectItem<Animal?>(animal, animal.name))
       .toList();
 
-  final _itemsracas = _racas
-      .map((raca) => MultiSelectItem<Raca?>(raca, raca.name))
-      .toList();
+  final _itemsracas =
+      _racas.map((raca) => MultiSelectItem<Raca?>(raca, raca.name)).toList();
 
   final _itemstamanhos = _tamanhos
       .map((tamanho) => MultiSelectItem<Tamanho?>(tamanho, tamanho.name))
       .toList();
 
-
-
-
-
-  static List<Animal?> convertListType(List<String> listSpecie, List<Animal?> animals){
+  static List<Animal?> convertListType(
+      List<String> listSpecie, List<Animal?> animals) {
     List<Animal?> species = [];
     for (String name in listSpecie) {
       for (Animal? animal in animals) {
@@ -120,48 +112,50 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return species;
-
   }
 
-  static List<Object?> convertListType2(List<String> listRace, List<Raca?> racas){
+  static List<Object?> convertListType2(
+      List<String> listRace, List<Raca?> racas) {
     List<Object?> races = [];
 
-    for (String name in listRace){
-      for(Raca? raca in racas) {
-
-        if (raca!.name == name){
+    for (String name in listRace) {
+      for (Raca? raca in racas) {
+        if (raca!.name == name) {
           races.add(raca);
         }
-
       }
     }
 
     return races;
-
   }
 
-  static List<Tamanho?> convertListType3(List<Size?> listTamanho, List<Tamanho?> tamanhos){
+  static List<Tamanho?> convertListType3(
+      List<Size?> listTamanho, List<Tamanho?> tamanhos) {
     List<Tamanho?> size = [];
-    var myMapSize = {Size.small: 'Pequeno',Size.medium: 'Médio', Size.big: 'Grande'};
+    var myMapSize = {
+      Size.small: 'Pequeno',
+      Size.medium: 'Médio',
+      Size.big: 'Grande'
+    };
     //print(listTamanho);
-    for (Size? name in listTamanho){
-      for(Tamanho? tamanho in tamanhos){
+    for (Size? name in listTamanho) {
+      for (Tamanho? tamanho in tamanhos) {
         String? stringSize = myMapSize[name];
-        if(tamanho!.name == stringSize){
+        if (tamanho!.name == stringSize) {
           size.add(tamanho);
         }
       }
-
     }
     //print(size);
     return size;
-
   }
 
-  List<Animal?> _selectedAnimals = convertListType(searchSettings.species.toList(),_animals);
-  List<Object?> _selectedAnimals2 = convertListType2(searchSettings.races.toList(),_racas);
-  List<Tamanho?> _selectedAnimals3 = convertListType3(searchSettings.sizes.toList(),_tamanhos);
-
+  List<Animal?> _selectedAnimals =
+      convertListType(searchSettings.species.toList(), _animals);
+  List<Object?> _selectedAnimals2 =
+      convertListType2(searchSettings.races.toList(), _racas);
+  List<Tamanho?> _selectedAnimals3 =
+      convertListType3(searchSettings.sizes.toList(), _tamanhos);
 
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
@@ -174,9 +168,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar:true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation:0,
+        elevation: 0,
         backgroundColor: Colors.transparent,
 
         //title: Text(widget.title),
@@ -185,35 +179,34 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [
-                  0.0,
-                  0.651,
-                  1.000
-                ],
-                colors: [
-                  Color(0XFF5551FF),
-                  Color(0XFF716EFD),
-                  Color(0XFFF5F4F6)
-                  //Color.fromRGBO(51, 46, 232, 100),
-                  //Color.fromRGBO(51, 46, 232, 100),
-                  //Color.fromRGBO(51, 46, 232, 100)
-                  //Color.fromRGBO(113, 110, 253,100),
-                  //Color.fromRGBO(245, 244, 246,100)
-                  //Color.fromRGBO(85, 81, 255, 100),
-                  //Color.fromRGBO(85, 81, 255, 100)
-                ],
-              )),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.651, 1.000],
+            colors: [
+              Color(0XFF5551FF),
+              Color(0XFF716EFD),
+              Color(0XFFF5F4F6)
+              //Color.fromRGBO(51, 46, 232, 100),
+              //Color.fromRGBO(51, 46, 232, 100),
+              //Color.fromRGBO(51, 46, 232, 100)
+              //Color.fromRGBO(113, 110, 253,100),
+              //Color.fromRGBO(245, 244, 246,100)
+              //Color.fromRGBO(85, 81, 255, 100),
+              //Color.fromRGBO(85, 81, 255, 100)
+            ],
+          )),
           alignment: Alignment.topLeft,
           padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
-          child:
-          Column(
-            children:  <Widget>[
+          child: Column(
+            children: <Widget>[
               SizedBox(height: 25),
-              Align(alignment: Alignment.centerLeft, child:Text("Configurações de busca",
-                  style: TextStyle(color: Colors.white,
-                      fontWeight: FontWeight.bold, fontSize: 19))),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Configurações de busca",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 19))),
               SizedBox(height: 25),
               //################################################################################################
               // Rounded blue MultiSelectDialogField
@@ -225,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 selectedColor: Colors.black.withOpacity(1),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(1),
-                  borderRadius: BorderRadius.all(Radius.elliptical(40,12)),
+                  borderRadius: BorderRadius.all(Radius.elliptical(40, 12)),
                   border: Border.all(
                     color: Colors.white,
                     width: 2,
@@ -235,7 +228,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.pets,
                   color: Colors.black,
                 ),
-
                 buttonText: Text(
                   "Tipo",
                   style: TextStyle(
@@ -256,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                   //color: Theme.of(context).primaryColor.withOpacity(.4),
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.elliptical(40,15)),
+                  borderRadius: BorderRadius.all(Radius.elliptical(40, 15)),
                   border: Border.all(
                     //color: Theme.of(context).primaryColor,
                     color: Colors.white,
@@ -271,8 +263,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       initialChildSize: 0.4,
                       listType: MultiSelectListType.CHIP,
                       searchable: true,
-                      buttonText: Text("Raça", style:TextStyle(fontSize: 14)),
-                      title: Text("Raça", style:TextStyle(fontSize: 14)),
+                      buttonText: Text("Raça", style: TextStyle(fontSize: 14)),
+                      title: Text("Raça", style: TextStyle(fontSize: 14)),
                       items: _itemsracas,
                       onConfirm: (values) {
                         _selectedAnimals2 = values as List<Object?>;
@@ -280,7 +272,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         //print(_selectedAnimals2);
                       },
                       chipDisplay: MultiSelectChipDisplay(
-
                         onTap: (value) {
                           setState(() {
                             _selectedAnimals2.remove(value);
@@ -309,18 +300,17 @@ class _MyHomePageState extends State<MyHomePage> {
               //################################################################################################
               Container(
                   decoration: BoxDecoration(
-                    //color: Theme.of(context).primaryColor.withOpacity(.4),
+                      //color: Theme.of(context).primaryColor.withOpacity(.4),
                       color: Colors.white),
-                  child: Column(children:[
-
+                  child: Column(children: [
                     MultiSelectBottomSheetField<Tamanho?>(
                       initialValue: _selectedAnimals3,
                       key: _multiSelectKey,
                       initialChildSize: 0.7,
                       maxChildSize: 0.95,
-                      title: Text("Tamanho", style:TextStyle(fontSize: 14)),
-                      buttonText: Text("Tamanho", style:TextStyle(fontSize: 14)),
-
+                      title: Text("Tamanho", style: TextStyle(fontSize: 14)),
+                      buttonText:
+                          Text("Tamanho", style: TextStyle(fontSize: 14)),
                       items: _itemstamanhos,
                       searchable: true,
                       validator: (values) {
@@ -343,7 +333,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           _multiSelectKey.currentState!.validate();
                         },
                       ),
-                    )])),
+                    )
+                  ])),
               SizedBox(height: 40)
 
               /*,
@@ -377,16 +368,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: _items,
                 initialValue:
                 _selectedAnimals5, // setting the value of this in initState() to pre-select values.
-              )*/,
+              )*/
+              ,
               SizedBox(height: 20),
-              Align(alignment: Alignment.centerLeft,
-                  child:Text.rich(
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(
                     TextSpan(
                       // with no TextStyle it will have default text style
                       text: '',
                       children: <TextSpan>[
-                        TextSpan(text: 'Idade',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white)),
-                        TextSpan(text: ' (em anos)', style: TextStyle(fontSize: 14, color: Colors.white)),
+                        TextSpan(
+                            text: 'Idade',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white)),
+                        TextSpan(
+                            text: ' (em anos)',
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.white)),
                       ],
                     ),
                   )),
@@ -401,9 +402,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     activeTrackColor: Colors.white,
                     activeTickMarkColor: Colors.white,
                     inactiveTrackColor: Colors.grey,
-                    valueIndicatorTextStyle:TextStyle(color: Colors.black),
+                    valueIndicatorTextStyle: TextStyle(color: Colors.black),
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8)),
-                child:               Slider(
+                child: Slider(
                   value: _currentSliderValue,
                   min: 0,
                   max: 12,
@@ -414,22 +415,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       _currentSliderValue = value;
                     });
                   },
-                )
-                ,
+                ),
               ),
-
-
 
               SizedBox(height: 40),
 
-              Align(alignment: Alignment.centerLeft,
-                  child:Text.rich(
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(
                     TextSpan(
                       // with no TextStyle it will have default text style
                       text: '',
                       children: <TextSpan>[
-                        TextSpan(text: 'Distância',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white)),
-                        TextSpan(text: ' (em km)', style: TextStyle(fontSize: 14, color: Colors.white)),
+                        TextSpan(
+                            text: 'Distância',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white)),
+                        TextSpan(
+                            text: ' (em km)',
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.white)),
                       ],
                     ),
                   )),
@@ -440,9 +447,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     activeTrackColor: Colors.white,
                     activeTickMarkColor: Colors.white,
                     inactiveTrackColor: Colors.grey,
-                    valueIndicatorTextStyle:TextStyle(color: Colors.black),
+                    valueIndicatorTextStyle: TextStyle(color: Colors.black),
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8)),
-                child:               Slider(
+                child: Slider(
                   value: _currentSliderValue2,
                   min: 0,
                   max: 12,
@@ -453,49 +460,60 @@ class _MyHomePageState extends State<MyHomePage> {
                       _currentSliderValue2 = value;
                     });
                   },
-                )
-                ,
+                ),
               ),
-              SizedBox( height:40),
-              SizedBox(width: width*0.8,child:
-              TextButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),
-                child: Text('Salvar', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  Set<String> speciesSet = {};
-                  Set<String> raceSet = {};
-                  Set<Size> sizeSet = {};
+              SizedBox(height: 40),
+              SizedBox(
+                  width: width * 0.8,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green)),
+                    child: Text('Salvar',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      Set<String> speciesSet = {};
+                      Set<String> raceSet = {};
+                      Set<Size> sizeSet = {};
 
-                  for (Animal? animal in _selectedAnimals){
-                    speciesSet.add(animal!.name);
-                  }
-                  //for (Object? race in _selectedAnimals2){
-                  //raceSet.add(race!.name);
-                  //}
+                      for (Animal? animal in _selectedAnimals) {
+                        speciesSet.add(animal!.name);
+                      }
+                      //for (Object? race in _selectedAnimals2){
+                      //raceSet.add(race!.name);
+                      //}
 
-                  for (Animal? animal in _selectedAnimals){
-                    speciesSet.add(animal!.name);
-                  }
-                  // settingsTipo = _selectedAnimals;
+                      for (Animal? animal in _selectedAnimals) {
+                        speciesSet.add(animal!.name);
+                      }
+                      // settingsTipo = _selectedAnimals;
 
-                  for (Object? object in _selectedAnimals2){
-                    Raca? raca = object as Raca?;
-                    raceSet.add(raca!.name);
-                  }
+                      for (Object? object in _selectedAnimals2) {
+                        Raca? raca = object as Raca?;
+                        raceSet.add(raca!.name);
+                      }
 
-                  var myMapSize = {'Pequeno': Size.small, 'Médio': Size.medium, 'Grande': Size.big};
-                  for (Tamanho? tamanho in _selectedAnimals3){
-                    sizeSet.add(myMapSize[tamanho!.name]!);
-                  }
+                      var myMapSize = {
+                        'Pequeno': Size.small,
+                        'Médio': Size.medium,
+                        'Grande': Size.big
+                      };
+                      for (Tamanho? tamanho in _selectedAnimals3) {
+                        sizeSet.add(myMapSize[tamanho!.name]!);
+                      }
 
-                  //settingsRaca = _selectedAnimals2 as <Raca?>;
-                  searchSettings.sizes = sizeSet;
-                  searchSettings.species = speciesSet;
-                  searchSettings.races = raceSet;
-                  //print(settingsRaca);
-                  searchSettings.maxAge = _currentSliderValue;
-                  searchSettings.maxDistance = _currentSliderValue2;
-                },
-              ))
+                      //settingsRaca = _selectedAnimals2 as <Raca?>;
+                      searchSettings.sizes = sizeSet;
+                      searchSettings.species = speciesSet;
+                      searchSettings.races = raceSet;
+                      //print(settingsRaca);
+                      searchSettings.maxAge = _currentSliderValue;
+                      searchSettings.maxDistance = _currentSliderValue2;
+                    },
+                  ))
             ],
           ),
         ),
