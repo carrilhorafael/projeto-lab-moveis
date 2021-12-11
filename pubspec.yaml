@@ -28,6 +28,9 @@ dependencies:
   fake_cloud_firestore: ^1.2.0
   shared_preferences: ^2.0.9
   geolocator: ^7.7.0
+  firebase_auth: "^3.2.0"
+
+  flutter_riverpod: ^1.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

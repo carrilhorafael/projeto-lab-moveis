@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:projeto_lab/searchsettings.dart';
+import 'package:projeto_lab/screens/search_settings.dart';
+
+import '../auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -30,9 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return MaterialApp(
-        theme: ThemeData(fontFamily: 'BrunoAce'),
-     home: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -66,11 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => SearchPage()),
                 );
               },
-            )
+            ),
+            TextButton(
+                child: Text('Testar login'),
+                onPressed: () {
+                  login("bruno@email.com", "supernenechi").then(print);
+                })
           ],
         ),
       ),
-
-    ));
+    );
   }
 }

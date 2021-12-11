@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:projeto_lab/util/enum.dart';
+
 class Pet {
   String id;
   String ownerId;
@@ -23,13 +25,12 @@ class Pet {
 
   Map<String, dynamic> toMap() {
     return {
-      if (id != "") 'id': id,
       'ownerId': ownerId,
       'name': name,
       'description': description,
       'species': species,
       'race': race,
-      'size': size.toString().split('.')[1],
+      'size': enumToString(size),
       'age': age,
     };
   }
@@ -53,8 +54,3 @@ class Pet {
 }
 
 enum Size { small, medium, big }
-
-// https://stackoverflow.com/questions/27673781/enum-from-string/44060511
-T enumFromString<T>(List<T> values, String value) {
-  return values.firstWhere((v) => v.toString().split('.')[1] == value);
-}

@@ -21,7 +21,6 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      if (id != "") 'id': id,
       'name': name,
       'address': address.toMap(),
       'email': email,

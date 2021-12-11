@@ -23,6 +23,8 @@ Future<void> main() async {
       userService = UserService(fake);
       petService = PetService(fake, userService);
       service = PetSearchService(fake, petService);
+
+      SharedPreferences.setMockInitialValues({});
     });
 
     test('save and retrieve', () async {
