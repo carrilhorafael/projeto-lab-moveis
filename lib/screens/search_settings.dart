@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
-
-SearchOptions searchSettings = SearchOptions(maxAge: 5, maxDistance: 9);
+import 'package:projeto_lab/providers.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class SearchPage extends StatelessWidget {
       //visualDensity: VisualDensity.adaptivePlatformDensity,
       //),
       //home:
-      body: Center(child: MyHomePage(title: 'Configurações de busca')),
+      body: Center(child: SearchSettingsPage(title: 'Configurações de busca')),
     );
   }
 }
@@ -59,16 +59,19 @@ class Animal {
   };
 }
 */
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class SearchSettingsPage extends ConsumerStatefulWidget {
+  SearchSettingsPage({Key? key, required this.title}) : super(key: key);
   final String title;
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SearchSettingsPageState createState() => _SearchSettingsPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  double _currentSliderValue = searchSettings.maxAge;
-  double _currentSliderValue2 = searchSettings.maxDistance;
+class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
+  SearchOptions searchSettings = SearchOptions(maxAge: 2, maxDistance: 5);
+  double _currentSliderValue = 2;
+  double _currentSliderValue2 = 5;
+
   static List<Animal> _animals = [
     Animal(name: "Cachorro"),
     Animal(name: "Gato"),
@@ -150,18 +153,32 @@ class _MyHomePageState extends State<MyHomePage> {
     return size;
   }
 
-  List<Animal?> _selectedAnimals =
-      convertListType(searchSettings.species.toList(), _animals);
-  List<Object?> _selectedAnimals2 =
-      convertListType2(searchSettings.races.toList(), _racas);
-  List<Tamanho?> _selectedAnimals3 =
-      convertListType3(searchSettings.sizes.toList(), _tamanhos);
+  List<Animal?> _selectedAnimals = convertListType([], _animals);
+  List<Object?> _selectedAnimals2 = convertListType2([], _racas);
+  List<Tamanho?> _selectedAnimals3 = convertListType3([], _tamanhos);
 
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
     super.initState();
+
+    () async {
+      final service = ref.read(petSearchServiceProvider);
+      final saved = await service.retrieve();
+      if (saved != null) {
+        setState(() {
+          searchSettings = saved;
+          _currentSliderValue = saved.maxAge;
+          _currentSliderValue2 = saved.maxDistance;
+          _selectedAnimals = saved.species.map((e) => Animal(name: e)).toList();
+          _selectedAnimals2 = saved.races.map((e) => Raca(name: e)).toList();
+          _selectedAnimals3 = _tamanhos
+              .where((element) => saved.sizes.contains(element))
+              .toList();
+        });
+      }
+    }();
   }
 
   @override
@@ -474,7 +491,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
-                    onPressed: () {
+                    onPressed: () async {
                       Set<String> speciesSet = {};
                       Set<String> raceSet = {};
                       Set<Size> sizeSet = {};
@@ -512,6 +529,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       //print(settingsRaca);
                       searchSettings.maxAge = _currentSliderValue;
                       searchSettings.maxDistance = _currentSliderValue2;
+
+                      await ref
+                          .watch(petSearchServiceProvider)
+                          .save(searchSettings);
                     },
                   ))
             ],
