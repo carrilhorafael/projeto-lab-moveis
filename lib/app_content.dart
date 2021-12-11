@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'home.dart';
+import 'screens/home.dart';
 
 class AppContent extends StatelessWidget {
   const AppContent({

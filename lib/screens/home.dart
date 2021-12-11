@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:projeto_lab/search_settings.dart';
+import 'package:projeto_lab/screens/search_settings.dart';
 
-import 'auth.dart';
+import '../auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
