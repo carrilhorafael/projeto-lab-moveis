@@ -42,7 +42,7 @@ class SignupForm extends StatelessWidget {
             MainTextInput("Confirmar sua senha", "Confirme sua senha"),
             MainTextInput("Telefone", "Digite seu telefone"),
             MainTextInput("CEP", "Digite seu CEP"),
-            MainTextInput("Rua", "Ruua e número"),
+            MainTextInput("Rua", "Rua e número"),
             MainTextInput("Complemento", "Apartamento, bloco"),
             MainTextInput("Estado", "Rio de Janeiro"),
             MainTextArea("Bio", "Fale um pouco sobre você"),
