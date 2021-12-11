@@ -18,8 +18,7 @@ class SignupPageFirst extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Center(child: Text("OU"))
             ),
-            SignupFormFirst()
-
+            SignupForm()
           ]
         )
       )
@@ -27,38 +26,39 @@ class SignupPageFirst extends StatelessWidget {
   }
   
 }
-class SignupFormFirst extends StatelessWidget {
-
-  final TextEditingController _controllerNameField = TextEditingController();
-  final TextEditingController _controllerEmailField = TextEditingController();
-  final TextEditingController _controllerPasswordField = TextEditingController();
-  final TextEditingController _controllerPasswordConfirmationField = TextEditingController();
-  final TextEditingController _controllerPhoneField = TextEditingController();
+class SignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("Crie uma conta"),
-          MainTextInput("Nome", "Digite seu nome completo", _controllerNameField),
-          MainTextInput("Email", "Digite seu email", _controllerEmailField),
-          MainTextInput("Senha", "Digite sua senha", _controllerPasswordField),
-          MainTextInput("Confirmar sua senha", "Confirme sua senha", _controllerPasswordConfirmationField),
-          MainTextInput("Telefone", "Digite seu telefone", _controllerPhoneField),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SignupPageSecond();
-                }));
-              }, 
-              child: const Text("Continuar")
+    return SingleChildScrollView(
+      child: Form(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Crie uma conta"),
+            MainTextInput("Nome", "Digite seu nome completo"),
+            MainTextInput("Email", "Digite seu email"),
+            MainTextInput("Senha", "Digite sua senha"),
+            MainTextInput("Confirmar sua senha", "Confirme sua senha"),
+            MainTextInput("Telefone", "Digite seu telefone"),
+            MainTextInput("CEP", "Digite seu CEP"),
+            MainTextInput("Rua", "Ruua e número"),
+            MainTextInput("Complemento", "Apartamento, bloco"),
+            MainTextInput("Estado", "Rio de Janeiro"),
+            MainTextArea("Bio", "Fale um pouco sobre você"),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ();
+                  }));
+                },
+                child: const Text("Continuar")
+              )
             )
-          )
-        ]
+          ]
+        )
       )
     );
   }
@@ -68,9 +68,8 @@ class MainTextInput extends StatelessWidget {
 
   final String _label;
   final String _hintText;
-  final TextEditingController _controller;
 
-  MainTextInput(this._label, this._hintText, this._controller);
+  MainTextInput(this._label, this._hintText);
 
   @override 
   Widget build(BuildContext context) {
@@ -80,7 +79,32 @@ class MainTextInput extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget> [
           TextFormField(
-            controller: _controller,
+            decoration: InputDecoration(
+              labelText: _label,
+              hintText: _hintText
+            )
+          ),
+        ]
+      )
+    );
+  }
+}
+
+class MainTextArea extends StatelessWidget {
+
+  final String _label;
+  final String _hintText;
+
+  MainTextArea(this._label, this._hintText);
+
+  @override 
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget> [
+          TextFormField(
             decoration: InputDecoration(
               labelText: _label,
               hintText: _hintText
