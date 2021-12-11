@@ -24,24 +24,130 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  //var myFile = File('file.txt');
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
+    return MaterialApp(
+        theme: ThemeData(fontFamily: 'BrunoAce'),
+     home: Scaffold(
+       appBar: null,
+       /*appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-      ),
+      ),*/
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: Stack(
+            children: [
+              SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child:
+                      Column(children:[
+
+
+                      Container(
+                        width: width,
+                        height: width*1.6898,
+                        decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage('images/petHomeScreen.png'),
+                        fit: BoxFit.cover,
+                        repeat: ImageRepeat.noRepeat,
+                        ),
+                        ),
+                        child:
+                          Align(
+                            alignment: Alignment.topRight,
+                            child:
+                            Container(margin: const EdgeInsets.only(top:20.0 , right: 20.0),
+
+
+                                child:
+
+
+
+
+                            TextButton(
+                              child: Text('ENTRAR', style:
+                              TextStyle(fontWeight: FontWeight.bold, color:Colors.white,
+                                  fontSize: 25)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SearchPage()),
+                          );
+                        },
+                      )),
+                          )),
+                        Container(
+                        width: width,
+                        height: 180,
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top:Radius.elliptical(20,4))),
+                        child:Column(
+                            crossAxisAlignment : CrossAxisAlignment.center,
+                            children:[SizedBox(height: 10),
+
+                              Text('PETINDER', style:
+                              TextStyle(fontWeight: FontWeight.bold, color:Color(0XFF5551FF),
+                                  fontSize: 25)),
+                              SizedBox(height: 15),
+
+                              Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi.', textAlign: TextAlign.center,
+                                  style:TextStyle(color:Colors.black,fontSize: 13)),
+                              SizedBox(height: 20),
+
+
+                            SizedBox(width: width*0.8,child:
+                              TextButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),
+                                child: Text('Faça sua conta', style:
+                                TextStyle(fontWeight: FontWeight.bold, color:Colors.white,
+                                    fontSize: 17)),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SearchPage()),
+                                  );
+                                },
+                              ))
+
+
+
+
+
+
+                              ]))
+
+                      ])
+              //Image(image: AssetImage('images/petHomeScreen.png'),width: width, height: width * 1.6898),
+              //Image.file(file: 'package:projeto_lab/images/petHomeScreen.png'),
+
+        )]
+        )
+
+        /*
+        Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -64,17 +170,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SearchPage()),
-                );
-              },
-            ),
-            TextButton(
-                child: Text('Testar login'),
-                onPressed: () {
-                  login("bruno@email.com", "supernenechi").then(print);
-                })
+            );
+            },
+            )
           ],
-        ),
+        ),*/
       ),
-    );
+
+    ));
   }
 }
+

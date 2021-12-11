@@ -48,7 +48,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  assets:
+    - images/petHomeScreen.png
+	
   fonts:
     - family: BrunoAce
       fonts:
