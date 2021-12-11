@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.0.2' // 4.1.0 -> 7.0.2 https://stackoverflow.com/questions/66722945/android-build-warning-mapping-new-ns-to-old-ns
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // Required for FlutterFire
