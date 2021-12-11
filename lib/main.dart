@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'app_content.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
