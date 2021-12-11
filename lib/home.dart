@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:projeto_lab/searchsettings.dart';
+import 'package:projeto_lab/search_settings.dart';
 
 import 'auth.dart';
 
