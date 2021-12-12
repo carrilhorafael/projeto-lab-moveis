@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:projeto_lab/components/button.dart';
+import 'package:projeto_lab/screens/login.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
 
@@ -67,11 +69,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            TextButton(
-                child: Text('Testar login'),
+            Button(
+                text: 'Testar login',
                 onPressed: () {
                   login("bruno@email.com", "supernenechi").then(print);
-                })
+                }),
+            TextButton(
+              child: Text('Página de Login'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+            )
           ],
         ),
       ),
