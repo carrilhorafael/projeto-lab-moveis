@@ -18,19 +18,23 @@ Future<Position> determinePosition() async {
     return Future.error('Location services are disabled.');
   }
 
-  permission = await Geolocator.checkPermission(); // Checks permission (doesn't ask for permission yet)
-  if (permission == LocationPermission.denied) { // If it is denied,
-    permission = await Geolocator.requestPermission(); // Asks for permission (has chance to choose "only once")
-    if (permission == LocationPermission.denied) { // If denied once again
+  permission = await Geolocator
+      .checkPermission(); // Checks permission (doesn't ask for permission yet)
+  if (permission == LocationPermission.denied) {
+    // If it is denied,
+    permission = await Geolocator
+        .requestPermission(); // Asks for permission (has chance to choose "only once")
+    if (permission == LocationPermission.denied) {
+      // If denied once again
       return Future.error('Location permissions are denied');
     }
   }
-  
+
   if (permission == LocationPermission.deniedForever) {
-    // Permissions are denied forever, handle appropriately. 
+    // Permissions are denied forever, handle appropriately.
     return Future.error(
-      'Location permissions are permanently denied, we cannot request permissions.');
-  } 
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
