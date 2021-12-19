@@ -27,7 +27,7 @@ class AppContent extends StatelessWidget {
           fontFamily: 'BrunoAce',
           //primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'PeTinder'),
+        home: HomePage(title: 'PeTinder'),
       ),
     );
   }

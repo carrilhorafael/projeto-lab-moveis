@@ -3,181 +3,102 @@ import 'package:flutter/widgets.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
 
-import '../auth.dart';
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class HomePage extends StatefulWidget {
+  HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  //var myFile = File('file.txt');
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return MaterialApp(
-        theme: ThemeData(fontFamily: 'BrunoAce'),
-     home: Scaffold(
-       appBar: null,
-       /*appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),*/
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Stack(
-            children: [
-              SingleChildScrollView(
+    return Scaffold(
+        appBar: null,
+        body: Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Stack(children: [
+          SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child:
-                      Column(children:[
-
-
-                      Container(
-                        width: width,
-                        height: width*1.6898,
-                        decoration: BoxDecoration(
-                        image: DecorationImage(
+              child: Column(children: [
+                Container(
+                    width: width,
+                    height: width * 1.6898,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
                         image: AssetImage('images/petHomeScreen.png'),
                         fit: BoxFit.cover,
                         repeat: ImageRepeat.noRepeat,
-                        ),
-                        ),
-                        child:
-                          Align(
-                            alignment: Alignment.topRight,
-                            child:
-                            Container(margin: const EdgeInsets.only(top:20.0 , right: 20.0),
-
-
-                                child:
-
-
-
-
-                            TextButton(
-                              child: Text('ENTRAR', style:
-                              TextStyle(fontWeight: FontWeight.bold, color:Colors.white,
-                                  fontSize: 25)),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => SearchPage()),
-                          );
-                        },
-                      )),
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                          margin: const EdgeInsets.only(top: 20.0, right: 20.0),
+                          child: TextButton(
+                            child: Text('ENTRAR',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 25)),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchPage()),
+                              );
+                            },
                           )),
-                        Container(
-                        width: width,
-                        height: 180,
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top:Radius.elliptical(20,4))),
-                        child:Column(
-                            crossAxisAlignment : CrossAxisAlignment.center,
-                            children:[SizedBox(height: 10),
-
-                              Text('PETINDER', style:
-                              TextStyle(fontWeight: FontWeight.bold, color:Color(0XFF5551FF),
+                    )),
+                Container(
+                    width: width,
+                    height: 180,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.elliptical(20, 4))),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 10),
+                          Text('PETINDER',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0XFF5551FF),
                                   fontSize: 25)),
-                              SizedBox(height: 15),
-
-                              Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi.', textAlign: TextAlign.center,
-                                  style:TextStyle(color:Colors.black,fontSize: 13)),
-                              SizedBox(height: 20),
-
-
-                            SizedBox(width: width*0.8,child:
-                              TextButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green)),
-                                child: Text('Faça sua conta', style:
-                                TextStyle(fontWeight: FontWeight.bold, color:Colors.white,
-                                    fontSize: 17)),
+                          SizedBox(height: 15),
+                          Text(
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidi.',
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 13)),
+                          SizedBox(height: 20),
+                          SizedBox(
+                              width: width * 0.8,
+                              child: TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.green)),
+                                child: Text('Faça sua conta',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 17)),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SearchPage()),
+                                    MaterialPageRoute(
+                                        builder: (context) => SearchPage()),
                                   );
                                 },
                               ))
-
-
-
-
-
-
-                              ]))
-
-                      ])
-              //Image(image: AssetImage('images/petHomeScreen.png'),width: width, height: width * 1.6898),
-              //Image.file(file: 'package:projeto_lab/images/petHomeScreen.png'),
-
-        )]
-        )
-
-        /*
-        Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-              child: Text('Testar configurações de busca'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchPage()),
-            );
-            },
-            )
-          ],
-        ),*/
-      ),
-
-    ));
+                        ]))
+              ]))
+        ])));
   }
 }
-
