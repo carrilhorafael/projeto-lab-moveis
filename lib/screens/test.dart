@@ -6,6 +6,7 @@ import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/tab_view.dart';
 
 import '../auth.dart';
+import 'shared/background.dart';
 
 class TestPage extends StatelessWidget {
   TestPage({Key? key}) : super(key: key);
@@ -33,7 +34,9 @@ class TestPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchPage()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Background(child: SearchSettingsPage())),
                 );
               },
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 
+import 'screens/shared/background.dart';
+
 class TabView extends StatelessWidget {
   const TabView({Key? key}) : super(key: key);
 
@@ -8,13 +10,15 @@ class TabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       child: Scaffold(
-        body: TabBarView(
-          children: [
-            Center(child: Text('Animal Search')),
-            SearchSettingsPage(title: 'Configurações de busca'),
-            Center(child: Text("Chat Screen")),
-            Center(child: Text("Profile Screen")),
-          ],
+        body: Background(
+          child: TabBarView(
+            children: [
+              Center(child: Text('Animal Search')),
+              SearchSettingsPage(),
+              Center(child: Text("Chat Screen")),
+              Center(child: Text("Profile Screen")),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
           child: TabBar(tabs: [

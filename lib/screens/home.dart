@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SearchPage()),
+                                    builder: (context) => SearchSettingsPage()),
                               );
                             },
                           )),
@@ -95,7 +95,8 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SearchPage()),
+                                        builder: (context) =>
+                                            SearchSettingsPage()),
                                   );
                                 },
                               ))
