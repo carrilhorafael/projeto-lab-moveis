@@ -49,7 +49,7 @@ dev_dependencies:
 flutter:
   assets:
     - images/petHomeScreen.png
-
+    - images/userProfilePic.jpg
   fonts:
     - family: BrunoAce
       fonts:
