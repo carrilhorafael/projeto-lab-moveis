@@ -10,9 +10,7 @@ class SearchPage extends StatelessWidget {
   SearchPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: SearchSettingsPage(title: 'Configurações de busca')),
-    );
+    return SearchSettingsPage(title: 'Configurações de busca');
   }
 }
 
@@ -177,40 +175,35 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+    final screenSize = MediaQuery.of(context).size;
+    double width = screenSize.width;
+    double height = screenSize.height;
 
-        //title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.0, 0.651, 1.000],
-            colors: [
-              Color(0XFF5551FF),
-              Color(0XFF716EFD),
-              Color(0XFFF5F4F6)
-              //Color.fromRGBO(51, 46, 232, 100),
-              //Color.fromRGBO(51, 46, 232, 100),
-              //Color.fromRGBO(51, 46, 232, 100)
-              //Color.fromRGBO(113, 110, 253,100),
-              //Color.fromRGBO(245, 244, 246,100)
-              //Color.fromRGBO(85, 81, 255, 100),
-              //Color.fromRGBO(85, 81, 255, 100)
-            ],
-          )),
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
+    return Scaffold(
+      body: Container(
+        height: height,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.0, 0.651, 1.000],
+          colors: [
+            Color(0XFF5551FF),
+            Color(0XFF716EFD),
+            Color(0XFFF5F4F6)
+            //Color.fromRGBO(51, 46, 232, 100),
+            //Color.fromRGBO(51, 46, 232, 100),
+            //Color.fromRGBO(51, 46, 232, 100)
+            //Color.fromRGBO(113, 110, 253,100),
+            //Color.fromRGBO(245, 244, 246,100)
+            //Color.fromRGBO(85, 81, 255, 100),
+            //Color.fromRGBO(85, 81, 255, 100)
+          ],
+        )),
+        padding: EdgeInsets.fromLTRB(20, 65, 20, 20),
+        child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 25),
               Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Configurações de busca",
@@ -367,7 +360,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                 },
               ),
               SizedBox(height: 40)
-
+      
               ,
               //################################################################################################
               // MultiSelectDialogField with initial values
