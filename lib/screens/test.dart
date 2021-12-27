@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:projeto_lab/screens/home.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
+import 'package:projeto_lab/tab_view.dart';
 
 import '../auth.dart';
 
@@ -40,6 +41,14 @@ class TestPage extends StatelessWidget {
                 child: Text('Testar login'),
                 onPressed: () {
                   login("bruno@email.com", "supernenechi").then(print);
+                }),
+            TextButton(
+                child: Text('Tab View'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TabView()),
+                  );
                 })
           ],
         ),

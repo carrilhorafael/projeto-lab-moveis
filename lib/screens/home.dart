@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     fontSize: 25)),
                             onPressed: () {
+                              // TODO send to login page
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -90,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white,
                                         fontSize: 17)),
                                 onPressed: () {
+                                  // TODO send to create account page
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/test.dart';
 import 'screens/home.dart';
 
-class AppContent extends StatelessWidget {
-  const AppContent({
+class App extends StatelessWidget {
+  const App({
     Key? key,
   }) : super(key: key);
 

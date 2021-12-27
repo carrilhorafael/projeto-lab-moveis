@@ -11,12 +11,6 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //title: 'Configurações de busca',
-      //theme: ThemeData(
-      //primarySwatch: Colors.purple,
-      //visualDensity: VisualDensity.adaptivePlatformDensity,
-      //),
-      //home:
       body: Center(child: SearchSettingsPage(title: 'Configurações de busca')),
     );
   }
