@@ -5,8 +5,9 @@ class MainDropdown extends StatefulWidget {
   final List<DropdownMenuItem<String>> _items;
   final String _hint;
   final String _label;
+  final TextEditingController _controller;
 
-  MainDropdown(this._items, this._hint, this._label);
+  MainDropdown(this._items, this._hint, this._label, this._controller);
 
   @override
   _MainDropdownState createState() {
