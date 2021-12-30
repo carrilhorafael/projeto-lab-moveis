@@ -10,8 +10,12 @@ class UserService {
   UserService(this.store);
 
   Future<void> create(User user) async {
-    final docRef = await collection().add(user);
-    user.id = docRef.id;
+    if (user.id == "") {
+      final docRef = await collection().add(user);
+      user.id = docRef.id;
+    } else {
+      await collection().doc(user.id).set(user);
+    }
   }
 
   Future<User> find(String id) async {
