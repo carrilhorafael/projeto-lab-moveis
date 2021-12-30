@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
+import 'package:projeto_lab/screens/signup.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -91,12 +92,10 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white,
                                         fontSize: 17)),
                                 onPressed: () {
-                                  // TODO send to create account page
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            SearchSettingsPage()),
+                                        builder: (context) => SignupPage()),
                                   );
                                 },
                               ))
