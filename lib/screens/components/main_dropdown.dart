@@ -1,38 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:projeto_lab/domain/entities/location/state.dart' as Location;
 
-class MainDropdown extends StatefulWidget {
-  final List<DropdownMenuItem<String>> _items;
+class MainDropdown extends StatelessWidget {
+  final List<DropdownMenuItem<Location.State>> _items;
   final String _hint;
   final String _label;
-  final TextEditingController _controller;
+  final void Function(Location.State?) onChanged;
 
-  MainDropdown(this._items, this._hint, this._label, this._controller);
-
-  @override
-  _MainDropdownState createState() {
-    return _MainDropdownState();
-  }
-}
-
-class _MainDropdownState extends State<MainDropdown> {
-  String? _value;
+  MainDropdown(this._items, this._hint, this._label, this.onChanged);
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Column(
       children: [
-        Text(widget._label),
-        DropdownButton<String>(
-          items: widget._items,
-          onChanged: (String? value) {
-            setState(() {
-              _value = value;
-            });
-          },
-          hint: Text(widget._hint),
-          value: _value,
+        Text(_label),
+        DropdownButtonFormField<Location.State>(
+          items: _items,
+          onChanged: onChanged,
+          hint: Text(_hint),
         ),
       ],
     ));
