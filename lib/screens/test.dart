@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/home.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/tab_view.dart';
 
-import '../auth.dart';
 import 'shared/background.dart';
 
-class TestPage extends StatelessWidget {
+class TestPage extends ConsumerWidget {
   TestPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: null,
       body: Center(
@@ -43,7 +44,10 @@ class TestPage extends StatelessWidget {
             TextButton(
                 child: Text('Testar login'),
                 onPressed: () {
-                  login("bruno@email.com", "supernenechi").then(print);
+                  final authService = ref.read(authServiceProvider);
+                  authService
+                      .login("bruno@email.com", "supernenechi")
+                      .then((_) => print("loggado"));
                 }),
             TextButton(
                 child: Text('Tab View'),
