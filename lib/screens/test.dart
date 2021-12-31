@@ -9,6 +9,8 @@ import 'package:projeto_lab/tab_view.dart';
 
 import 'shared/background.dart';
 
+import 'package:projeto_lab/screens/user_location.dart';
+
 class TestPage extends ConsumerWidget {
   TestPage({Key? key}) : super(key: key);
 
@@ -56,7 +58,18 @@ class TestPage extends ConsumerWidget {
                     context,
                     MaterialPageRoute(builder: (context) => TabView()),
                   );
-                })
+                }),
+                TextButton(
+              child: Text('Testar Mapa do chat'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Background(child: MapSample())),
+                );
+              },
+            ),
           ],
         ),
       ),
