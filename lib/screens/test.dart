@@ -10,6 +10,7 @@ import 'package:projeto_lab/tab_view.dart';
 import 'shared/background.dart';
 
 import 'package:projeto_lab/screens/user_location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TestPage extends ConsumerWidget {
   TestPage({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class TestPage extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Background(child: MapSample())),
+                          Background(child: MapSample(LatLng(37.42796133580664, -122.085749655962),LatLng(37.43296265331129, -122.08832357078792)))),
                 );
               },
             ),
