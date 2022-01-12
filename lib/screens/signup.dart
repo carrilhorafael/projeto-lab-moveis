@@ -83,7 +83,9 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
     }
 
     return SingleChildScrollView(
-      child: Form(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+        child: Form(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -109,6 +111,7 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
                     onPressed: () => _submit(),
                     child: const Text("Continuar"))),
           ])),
+      )
     );
   }
 }
