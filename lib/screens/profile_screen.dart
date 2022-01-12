@@ -4,6 +4,7 @@ import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
+import 'package:projeto_lab/domain/services/auth_service.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -14,18 +15,7 @@ class ProfilePage extends ConsumerStatefulWidget {
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   // TODO extrair usuario daqui
-  User currentUser = User(
-      id: "0",
-      name: "João da Silva",
-      address: Address(
-          postalCode: "20111-111",
-          address: "Rua 1, Icaraí, Niterói",
-          complement: "Ap 101",
-          state: AddressState.State("Rio de Janeiro", "RJ")),
-      email: "joao@dasilva.com",
-      phone: "2199999-9999",
-      description:
-          "Lorem ipsum amet dolor Lorem ipsum amet dolor Lorem ipsum amet dolor");
+  User currentUser = AuthService.currentUser();
 
   @override
   Widget build(BuildContext context) {
