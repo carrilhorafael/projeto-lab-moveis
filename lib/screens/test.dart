@@ -67,7 +67,7 @@ class TestPage extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Background(child: MapSample(LatLng(37.42796133580664, -122.085749655962),LatLng(37.43296265331129, -122.08832357078792)))),
+                          Background(child: UserMap(LatLng(-22.87838, -43.50415),LatLng(-22.88196, -43.52242)))),
                 );
               },
             ),

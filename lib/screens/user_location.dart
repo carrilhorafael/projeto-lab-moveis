@@ -1,41 +1,86 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
-class MapSample extends StatefulWidget {
-  MapSample(this.sourceUser, this.destinationUser);
+class UserMap extends StatefulWidget {
+  UserMap(this.sourceUser, this.destinationUser);
   final LatLng sourceUser;
   final LatLng destinationUser;
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<UserMap> createState() => UserMapState();
 }
 
-class MapSampleState extends State<MapSample> {
+class UserMapState extends State<UserMap> {
   Completer<GoogleMapController> _controller = Completer();
 
+  // pathing
+  PolylinePoints _polylinePoints = PolylinePoints();
+  Map<PolylineId, Polyline> _polylines = {};
+  List<LatLng> _polylineCoordinates = [];
+  //
+      
+  @override
+  void initState() {
+    // criar polyline
+    addPolyLine() {
+      print(_polylineCoordinates);
+      PolylineId id = PolylineId("poly");
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.red,
+        points: _polylineCoordinates
+      );
+      _polylines[id] = polyline;
+      setState((){});
+    }
+    // query pro google
+    void makeLines() async {
+      try {
+        await _polylinePoints
+          .getRouteBetweenCoordinates(
+              'AIzaSyDcETZGZ5nMWqD8rD-U3rTTlUPfqz-eEq8',
+              PointLatLng(widget.sourceUser.latitude, widget.sourceUser.longitude), //Starting LATLANG
+              PointLatLng(widget.destinationUser.latitude, widget.destinationUser.longitude), //End LATLANG
+              travelMode: TravelMode.driving,
+          ).then((value) {
+            value.points.forEach((PointLatLng point) {
+            _polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+          });
+        }).then((value) {
+          addPolyLine();
+        });
+      } catch(e) {
+        print("aaaaaaaaaaadsadasdasdasd");
+        print(e);
+      }
+    }
+    makeLines();
+    ///////////////
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     final CameraPosition initialPos = CameraPosition(
       target: widget.sourceUser,
-      zoom: 14.4746,
+      zoom: 14.4746, // deveria usar uma conta pra saber qual zoom usar (dependente das distancia dos dois pontos), mas é mais detalhe que outra coisa
     );
 
     final List<Marker> markers = <Marker>[
       Marker(
-        markerId: MarkerId('SomeId'),
+        markerId: MarkerId('SomeId'), // irrelevante
         position: widget.sourceUser,
         infoWindow: InfoWindow(
-          title: 'The title of the marker'
+          title: 'Sua localização'
         )
       ),
       Marker(
         markerId: MarkerId('SomeId'),
         position: widget.destinationUser,
         infoWindow: InfoWindow(
-          title: 'The title of the marker'
+          title: 'Local do usuário em conversa'
         )
       )
     ];
@@ -45,6 +90,7 @@ class MapSampleState extends State<MapSample> {
         mapType: MapType.hybrid,
         initialCameraPosition: initialPos,
         markers: Set<Marker>.of(markers),
+        polylines: Set<Polyline>.of(_polylines.values),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
