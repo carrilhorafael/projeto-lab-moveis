@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:projeto_lab/screens/conversations.dart';
 
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/signup.dart';
