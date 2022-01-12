@@ -1,4 +1,4 @@
-package com.example.projeto_lab
+package br.uff.ic.dm.gruporoxo20212
 
 import io.flutter.embedding.android.FlutterActivity
 
