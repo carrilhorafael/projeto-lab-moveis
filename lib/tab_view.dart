@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_lab/screens/conversations.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/profile_screen.dart';
 import 'screens/shared/background.dart';
@@ -15,7 +16,7 @@ class TabView extends StatelessWidget {
             children: [
               Center(child: Text('Animal Search')),
               SearchSettingsPage(),
-              Center(child: Text("Chat Screen")),
+              Conversations(),
               ProfilePage(),
             ],
           ),
