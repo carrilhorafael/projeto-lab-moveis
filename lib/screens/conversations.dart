@@ -5,22 +5,12 @@ import 'package:projeto_lab/domain/entities/location/state.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/screens/chat.dart';
 
-class Conversations extends StatelessWidget {
+
+class Conversations extends ConsumerStatefulWidget {
   Conversations({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ConversationsSettings(title: 'Suas conversas'),
-    );
-  }
-}
-
-class ConversationsSettings extends ConsumerStatefulWidget {
-  ConversationsSettings({Key? key, required this.title}) : super(key: key);
-  final String title;
 
   @override
-  _ConversationsSettingsState createState() => _ConversationsSettingsState();
+  _ConversationsState createState() => _ConversationsState();
 }
 
 class Conversation {
@@ -47,7 +37,7 @@ class Message {
   });
 }
 
-class _ConversationsSettingsState extends ConsumerState<ConversationsSettings> {
+class _ConversationsState extends ConsumerState<Conversations> {
 
   static List<Conversation> _conversations = [
     Conversation(
@@ -196,27 +186,9 @@ class _ConversationsSettingsState extends ConsumerState<ConversationsSettings> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Container (
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.651, 1.000],
-              colors: [
-                Color(0XFF5551FF),
-                Color(0XFF716EFD),
-                Color(0XFFF5F4F6)
-              ],
-            )
-          ),
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
           height: MediaQuery.of(context).size.height,
           child: ListView.builder(
             itemCount: _conversations.length,
