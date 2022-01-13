@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:projeto_lab/screens/conversations.dart';
-
-import 'package:projeto_lab/screens/search_settings.dart';
+import 'package:projeto_lab/screens/login.dart';
 import 'package:projeto_lab/screens/signup.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SearchSettingsPage()),
+                                    builder: (context) => Login()),
                               );
                             },
                           )),
