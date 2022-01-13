@@ -67,6 +67,7 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
           email: _teEmail.text,
           name: _teName.text,
           phone: _tePhone.text,
+          description: _teBio.text,
           address: Address(
               postalCode: _teCEP.text,
               address: _teAddress.text,
@@ -83,18 +84,19 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
     }
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Form(
+        child: Padding(
+      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Form(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
             Text("Crie uma conta"),
             MainTextInput("Nome", "Digite seu nome completo", _teName),
             MainTextInput("Email", "Digite seu email", _teEmail),
-            MainTextInput("Senha", "Digite sua senha", _tePassword),
+            MainTextInput("Senha", "Digite sua senha", _tePassword,
+                hideText: true),
             MainTextInput("Confirmar sua senha", "Confirme sua senha",
-                _tePasswordConfirmation),
+                _tePasswordConfirmation,hideText: true,),
             MainTextInput("Telefone", "Digite seu telefone", _tePhone),
             MainTextInput("CEP", "Digite seu CEP", _teCEP),
             MainTextInput("Rua", "Rua e número", _teAddress),
@@ -111,7 +113,6 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
                     onPressed: () => _submit(),
                     child: const Text("Continuar"))),
           ])),
-      )
-    );
+    ));
   }
 }

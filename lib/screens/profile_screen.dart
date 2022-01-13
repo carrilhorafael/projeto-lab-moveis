@@ -7,15 +7,15 @@ import 'package:projeto_lab/domain/entities/location/state.dart'
 import 'package:projeto_lab/domain/services/auth_service.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  final User user;
+
+  ProfilePage(this.user,{Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  // TODO extrair usuario daqui
-  User currentUser = AuthService.currentUser();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           SizedBox(width: 10),
           Align(
               alignment: Alignment.centerLeft,
-              child: Text(currentUser.name,
+              child: Text(widget.user.name,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: currentUser.email,
+                text: widget.user.email,
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(height: 25),
         Align(
@@ -74,7 +74,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: currentUser.phone,
+                text: widget.user.phone,
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(height: 25),
         Align(
@@ -88,7 +88,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: currentUser.description,
+                text: widget.user.description,
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(
             width: width * 0.9,
