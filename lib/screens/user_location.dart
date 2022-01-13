@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
-// import 'package:geocoding/geocoding.dart';
-// Future<LatLng> addressToLatLong(String address) async {
-//   List<Location> location = await locationFromAddress(address);
-//   return LatLng(location[0].latitude, location[0].longitude);
-// }
-
 class UserMap extends StatefulWidget {
   UserMap(this.sourceUser, this.destinationUser);
   final LatLng sourceUser;
