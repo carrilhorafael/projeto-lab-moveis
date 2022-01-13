@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_lab/screens/conversations.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/profile_screen.dart';
+import 'domain/services/auth_service.dart';
 import 'screens/shared/background.dart';
 
 class TabView extends StatelessWidget {
@@ -17,7 +18,7 @@ class TabView extends StatelessWidget {
               Center(child: Text('Animal Search')),
               SearchSettingsPage(),
               Conversations(),
-              ProfilePage(),
+              ProfilePage(AuthService.currentUser()!),
             ],
           ),
         ),

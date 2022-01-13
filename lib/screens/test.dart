@@ -60,14 +60,16 @@ class TestPage extends ConsumerWidget {
                     MaterialPageRoute(builder: (context) => TabView()),
                   );
                 }),
-                TextButton(
+            TextButton(
               child: Text('Testar Mapa do chat'),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => // LatLng são pegos do 
-                          Background(child: UserMap(LatLng(-22.87838, -43.50415),LatLng(-22.88196, -43.52242)))),
+                      builder: (context) => // LatLng são pegos do
+                          Background(
+                              child: UserMap(LatLng(-22.87838, -43.50415),
+                                  LatLng(-22.88196, -43.52242)))),
                 );
               },
             ),

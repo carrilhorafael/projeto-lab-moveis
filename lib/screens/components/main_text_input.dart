@@ -5,8 +5,10 @@ class MainTextInput extends StatelessWidget {
   final String _label;
   final String _hintText;
   final TextEditingController _controller;
+  final bool hideText;
 
-  MainTextInput(this._label, this._hintText, this._controller);
+  MainTextInput(this._label, this._hintText, this._controller,
+      {this.hideText = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class MainTextInput extends StatelessWidget {
             children: <Widget>[
               TextFormField(
                   controller: _controller,
+                  obscureText: hideText,
                   decoration:
                       InputDecoration(labelText: _label, hintText: _hintText)),
             ]));

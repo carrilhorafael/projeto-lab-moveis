@@ -83,16 +83,17 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
     }
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Form(
+        child: Padding(
+      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Form(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
             Text("Crie uma conta"),
             MainTextInput("Nome", "Digite seu nome completo", _teName),
             MainTextInput("Email", "Digite seu email", _teEmail),
-            MainTextInput("Senha", "Digite sua senha", _tePassword),
+            MainTextInput("Senha", "Digite sua senha", _tePassword,
+                hideText: true),
             MainTextInput("Confirmar sua senha", "Confirme sua senha",
                 _tePasswordConfirmation),
             MainTextInput("Telefone", "Digite seu telefone", _tePhone),
@@ -111,7 +112,6 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
                     onPressed: () => _submit(),
                     child: const Text("Continuar"))),
           ])),
-      )
-    );
+    ));
   }
 }

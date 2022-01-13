@@ -8,20 +8,7 @@ import 'package:projeto_lab/domain/entities/location/state.dart'
 class AuthService {
   final FirebaseAuth auth;
   final UserService userService;
-  static User _currentUser = User(
-        id: "0",
-        name: "João da Silva",
-        address: Address(
-          postalCode: "20111-111",
-          address: "Rua 1, Icaraí, Niterói",
-          complement: "Ap 101",
-          state: AddressState.State("Rio de Janeiro", "RJ")
-        ),
-        email: "joao@dasilva.com",
-        phone: "2199999-9999",
-        description:
-          "Lorem ipsum amet dolor Lorem ipsum amet dolor Lorem ipsum amet dolor"
-      );
+  static User? _currentUser;
 
   AuthService(this.auth, this.userService) {
     // authListener().listen((loggedIn) {
@@ -64,14 +51,14 @@ class AuthService {
       AuthService._currentUser = user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        throw Exception('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        throw Exception('Wrong password provided for that user.');
       }
     }
   }
 
-  static User currentUser() {
+  static User? currentUser() {
     return AuthService._currentUser;
   }
 
