@@ -189,6 +189,8 @@ class _ConversationsState extends ConsumerState<Conversations> {
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Container (
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
           height: MediaQuery.of(context).size.height,
           child: ListView.builder(
             itemCount: _conversations.length,
