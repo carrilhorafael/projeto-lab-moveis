@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';
 
@@ -73,5 +77,20 @@ class PetService {
     final snapshot = await collection(userId).get();
 
     return snapshot.docs.map((e) => e.data()).toList();
+  }
+
+  Reference _petImages(String id) {
+    return FirebaseStorage.instance.ref('pet_images').child(id);
+  }
+
+  Future<String> uploadImage(String id, File file) async {
+    final result =
+        await _petImages(id).child('${basename(file.path)}').putFile(file);
+    return result.ref.getDownloadURL();
+  }
+
+  Future<List<String>> fetchImagesURL(String id) async {
+    final result = await _petImages(id).list();
+    return Future.wait(result.items.map((e) => e.getDownloadURL()));
   }
 }
