@@ -4,6 +4,7 @@ import 'package:projeto_lab/domain/services/user_service.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
+import 'package:projeto_lab/util/geo.dart';
 
 class AuthService {
   final FirebaseAuth auth;
@@ -56,6 +57,16 @@ class AuthService {
         throw Exception('Wrong password provided for that user.');
       }
     }
+    await _updateCurrentUserPosition();
+  }
+
+  Future<void> _updateCurrentUserPosition() async {
+    if (_currentUser == null) return;
+
+    final position = await determinePosition();
+    _currentUser!.position = position;
+
+    await userService.update(_currentUser!);
   }
 
   static User? currentUser() {
