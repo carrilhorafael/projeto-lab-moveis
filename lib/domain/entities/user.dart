@@ -29,7 +29,7 @@ class User {
       'email': email,
       'phone': phone,
       'description': description,
-      'position': position,
+      'position': position?.toJson(),
     };
   }
 
@@ -42,7 +42,11 @@ class User {
       phone: map['phone'],
       description: map['description'],
     );
-    user.position = map['position'];
+    final position = map['position'];
+
+    if (position != null) {
+      user.position = Position.fromMap(position);
+    }
     return user;
   }
 

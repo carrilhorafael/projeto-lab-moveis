@@ -31,16 +31,12 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
-          print('The password provided is too weak.');
-          break;
+          throw Exception('The password provided is too weak.');
         case 'email-already-in-use':
-          print('The account already exists for that email.');
-          break;
+          throw Exception('The account already exists for that email.');
         default:
-          print("An auth error occurred");
+          throw Exception("An auth error occurred");
       }
-    } catch (e) {
-      print(e);
     }
   }
 

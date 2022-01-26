@@ -5,17 +5,32 @@ import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
 import 'package:projeto_lab/domain/services/auth_service.dart';
+import 'package:projeto_lab/providers.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   final User user;
 
-  ProfilePage(this.user,{Key? key}) : super(key: key);
+  ProfilePage(this.user, {Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
+  String? _url;
+  @override
+  void initState() {
+    super.initState();
+
+    final service = ref.read(userServiceProvider);
+    // ignore: unnecessary_statements
+    () async {
+      final url = await service.fetchImageURL(widget.user.id);
+      setState(() {
+        this._url = url;
+      });
+    }();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +48,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 height: 80,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('images/userProfilePic.jpg'),
+                    image: _url != null
+                        ? Image.network(_url!).image
+                        : AssetImage('images/userProfilePic.jpg'),
                     fit: BoxFit.cover,
                     repeat: ImageRepeat.noRepeat,
                   ),

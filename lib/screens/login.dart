@@ -69,7 +69,8 @@ class LoginState extends ConsumerState<Login> {
                                         builder: (context) => TabView()),
                                   );
                                 } catch (e) {
-                                  // caso nao logue, faca algo
+                                  print(e);
+                                  rethrow;
                                 }
                               })),
                     )
