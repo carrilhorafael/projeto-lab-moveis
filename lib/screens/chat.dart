@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart' hide State;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:projeto_lab/domain/entities/Interest.dart';
 import 'package:projeto_lab/domain/entities/message.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
+import 'package:projeto_lab/screens/user_location.dart';
 
 class Chat extends ConsumerStatefulWidget {
   final User currentUser = AuthService.currentUser()!;
   final Interest interest;
-  final User owner;
-  Chat(this.interest, this.owner);
+  final User other;
+  Chat(this.interest, this.other);
 
   @override
   _ChatState createState() => _ChatState();
@@ -118,10 +120,20 @@ class _ChatState extends ConsumerState<Chat> {
     return Scaffold(
         appBar: AppBar(
             title: Row(children: <Widget>[
-          Text(widget.owner.name),
+          Text(widget.other.name),
           IconButton(
               onPressed: () {
-                print('Abrir o mapa desse usuário');
+                final currentPosition = widget.currentUser.position!;
+                final current =
+                    LatLng(currentPosition.latitude, currentPosition.longitude);
+
+                final otherPosition = widget.other.position!;
+                final other =
+                    LatLng(otherPosition.latitude, otherPosition.longitude);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_ctx) => UserMap(current, other)));
               },
               icon: Icon(Icons.map_outlined))
         ])),
