@@ -40,8 +40,14 @@ class ChatService {
 
     final messages = await query.get();
 
-    query.limit(1).snapshots().listen((event) {
-      listener(event.docChanges.first.doc.data()!);
+    collection(interest.id)
+        .orderBy("createdAt", descending: true)
+        .limit(1)
+        .snapshots()
+        // this `skip` is used to not duplicate the last message on the first load
+        .skip(1)
+        .listen((event) {
+      listener(event.docs.first.data());
     });
 
     return messages.docs.map((e) => e.data()).toList();
