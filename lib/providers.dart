@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
+import 'package:projeto_lab/domain/services/chat_service.dart';
 import 'package:projeto_lab/domain/services/interest_service.dart';
 import 'package:projeto_lab/domain/services/pet_search_service.dart';
 import 'package:projeto_lab/domain/services/pet_service.dart';
@@ -30,4 +31,9 @@ final interestServiceProvider = Provider((ref) {
 final authServiceProvider = Provider((ref) {
   final userService = ref.watch(userServiceProvider);
   return AuthService(FirebaseAuth.instance, userService);
+});
+
+final chatServiceProvider = Provider((ref) {
+  final interestService = ref.watch(interestServiceProvider);
+  return ChatService(interestService);
 });

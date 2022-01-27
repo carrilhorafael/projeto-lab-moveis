@@ -26,6 +26,13 @@ class ChatService {
             toFirestore: (message, _) => message.toMap());
   }
 
+  Future<Message> lastMessage(Interest interest) async {
+    final query = collection(interest.id).orderBy("createdAt");
+    final messages = await query.get();
+
+    return messages.docs.map((e) => e.data()).toList().last;
+  }
+
   /// `listener` receives new messages. Useful e.g. to update state after receiving a new message.
   Future<List<Message>> messages(
       Interest interest, Function(Message) listener) async {
