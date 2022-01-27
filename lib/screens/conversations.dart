@@ -14,7 +14,7 @@ import 'package:projeto_lab/screens/chat.dart';
 
 class Conversations extends ConsumerStatefulWidget {
   Conversations({Key? key}) : super(key: key);
-  User current_user = AuthService.currentUser()!;
+  final User currentUser = AuthService.currentUser()!;
 
   @override
   _ConversationsState createState() => _ConversationsState();
@@ -31,7 +31,7 @@ class _ConversationsState extends ConsumerState<Conversations> {
     () async {
       final petService = ref.read(petServiceProvider);
       final service = ref.read(interestServiceProvider);
-      final interests = await service.findInterests(widget.current_user);
+      final interests = await service.findInterests(widget.currentUser);
       List<Message> lastMessages = [];
       List<User> users = [];
 
@@ -43,9 +43,9 @@ class _ConversationsState extends ConsumerState<Conversations> {
       }
 
       for (final interest in interests){
-        // final pet = await petService.find(interest.petId);
+        final pet = await petService.find(interest.petId);
         final userService = ref.read(userServiceProvider);
-        final user = await userService.find(interest.userId);
+        final user = await userService.find(pet.ownerId);
 
         users.add(user);
       }

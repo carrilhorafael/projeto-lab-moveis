@@ -7,9 +7,9 @@ import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 
 class Chat extends ConsumerStatefulWidget {
-  User current_user = AuthService.currentUser()!;
-  Interest interest;
-  User owner;
+  final User currentUser = AuthService.currentUser()!;
+  final Interest interest;
+  final User owner;
   Chat(this.interest, this.owner);
 
   @override
@@ -41,7 +41,7 @@ class _ChatState extends ConsumerState<Chat> {
 
   _sendMessage() async {
     Message message = new Message(interestId: widget.interest.id, content: _controllerMessage.text);
-    message.senderId =  widget.current_user.id;
+    message.senderId =  widget.currentUser.id;
 
     final service = ref.read(chatServiceProvider);
     await service.send(message);
@@ -87,20 +87,20 @@ class _ChatState extends ConsumerState<Chat> {
           Message message = _messages[index];
 
           return Align(
-            alignment: message.isFrom(widget.current_user) ? Alignment.centerRight : Alignment.centerLeft,
+            alignment: message.isFrom(widget.currentUser) ? Alignment.centerRight : Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.all(5),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: message.isFrom(widget.current_user) ? Color(0xff7B61FF) : Color(0xffE5E5E5),
+                  color: message.isFrom(widget.currentUser) ? Color(0xff7B61FF) : Color(0xffE5E5E5),
                   borderRadius: BorderRadius.all(Radius.circular(8))
                 ),
                 child: Text(
                   message.content,
                   style: TextStyle(
-                    color: message.isFrom(widget.current_user) ? Colors.white : Colors.black
+                    color: message.isFrom(widget.currentUser) ? Colors.white : Colors.black
                   )
                 ),
               ),
