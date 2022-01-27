@@ -17,8 +17,9 @@ class PetService {
   PetService(this.store, this.userService);
 
   Future<void> create(Pet pet) async {
-    final docRef = await collection(pet.ownerId).add(pet);
+    final docRef = collection(pet.ownerId).doc();
     pet.id = docRef.id;
+    await docRef.set(pet);
   }
 
   CollectionReference<Pet> collection(String ownerId) {
@@ -45,8 +46,7 @@ class PetService {
   }
 
   Future<Pet> find(String id) async {
-    final snapshot =
-        await query().where(FieldPath.documentId, isEqualTo: id).get();
+    final snapshot = await query().where('id', isEqualTo: id).get();
 
     if (snapshot.docs.isEmpty) {
       throw NotFoundException();
@@ -66,8 +66,7 @@ class PetService {
   }
 
   Future<void> delete(String id) async {
-    final snapshot =
-        await query().where(FieldPath.documentId, isEqualTo: id).get();
+    final snapshot = await query().where('id', isEqualTo: id).get();
     if (snapshot.docs.isNotEmpty) {
       await snapshot.docs.first.reference.delete();
     }
