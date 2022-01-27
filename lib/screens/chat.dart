@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide State;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:projeto_lab/domain/entities/Interest.dart';
 import 'package:projeto_lab/domain/entities/message.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
@@ -14,6 +15,8 @@ class Chat extends ConsumerStatefulWidget {
   final User other;
   Chat(this.interest, this.other);
 
+
+
   @override
   _ChatState createState() => _ChatState();
 }
@@ -23,14 +26,20 @@ class _ChatState extends ConsumerState<Chat> {
   List<Message> _messages = [];
 
   listener(message) {
-    print("LISTENER: ${message.content}");
+    //print("LISTENER: ${message.content}");
     setState(() {
       _messages.add(message);
     });
   }
 
+
+
+
   void initState() {
     super.initState();
+
+
+
 
     () async {
       final service = ref.read(chatServiceProvider);
@@ -40,6 +49,8 @@ class _ChatState extends ConsumerState<Chat> {
         _messages.addAll(messages);
       });
     }();
+
+
   }
 
   _sendMessage() async {

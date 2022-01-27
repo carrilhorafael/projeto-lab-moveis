@@ -25,7 +25,9 @@ final petSearchServiceProvider = Provider((ref) {
 });
 
 final interestServiceProvider = Provider((ref) {
-  return InterestService(_store());
+  final petService = ref.watch(petServiceProvider);
+  final userService = ref.watch(userServiceProvider);
+  return InterestService(_store(), petService, userService);
 });
 
 final authServiceProvider = Provider((ref) {
@@ -35,5 +37,7 @@ final authServiceProvider = Provider((ref) {
 
 final chatServiceProvider = Provider((ref) {
   final interestService = ref.watch(interestServiceProvider);
-  return ChatService(interestService);
+  final petService = ref.watch(petServiceProvider);
+  final userService = ref.watch(userServiceProvider);
+  return ChatService(interestService,petService,userService);
 });

@@ -1,13 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import 'package:projeto_lab/domain/entities/Interest.dart';
 import 'package:projeto_lab/domain/entities/message.dart';
+import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/services/interest_service.dart';
-
+import 'package:projeto_lab/domain/entities/user.dart';
+import 'package:projeto_lab/domain/services/pet_service.dart';
+import 'package:projeto_lab/domain/services/user_service.dart';
 import 'exceptions/not_found_exception.dart';
 
 class ChatService {
   final InterestService interestService;
-  ChatService(this.interestService);
+  final PetService petService;
+  final UserService userService;
+  ChatService(this.interestService, this.petService, this.userService);
 
   CollectionReference<Message> collection(String interestId) {
     return interestService
@@ -54,6 +61,38 @@ class ChatService {
   }
 
   Future<void> send(Message message) {
+        ()async {
+
+      Interest interest = await interestService.find(message.interestId);
+      User otherUser = await userService.find(message.senderId);
+      if (interest.userId == message.senderId){
+        Pet pet = await petService.find(interest.petId);
+        User petOwner = await userService.find(pet.ownerId);
+
+
+        OneSignal.shared.postNotification(OSCreateNotification(
+          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
+
+          playerIds: [petOwner.playerID],
+          content: "${otherUser.name}: ${message.content}",
+          heading: "Nova mensagem",
+
+
+        ));
+      }else{
+        User userInterest = await userService.find(interest.userId);
+        OneSignal.shared.postNotification(OSCreateNotification(
+          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
+          playerIds: [userInterest.playerID],
+          content: "${otherUser.name}:  ${message.content}",
+          heading: "Nova mensagem",
+
+        ));
+
+
+      }
+
+    }();
     return collection(message.interestId).add(message);
   }
 }
