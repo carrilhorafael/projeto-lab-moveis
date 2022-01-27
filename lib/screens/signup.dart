@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart' as Location;
 import 'package:projeto_lab/domain/entities/user.dart';
+import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/tab_view.dart';
 import 'components/main_dropdown.dart';
@@ -51,6 +55,8 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
 
   Location.State? _state;
 
+  String? _imagePath;
+
   @override
   Widget build(BuildContext context) {
     final _states = Location.State.validStates.map((e) {
@@ -74,7 +80,11 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
               complement: _teComplement.text,
               state: _state!));
 
-      authService.register(user.email, _tePassword.text, user).then((_) {
+      authService.register(user.email, _tePassword.text, user).then((_) async {
+        final userService = ref.read(userServiceProvider);
+        await userService.uploadImage(user.id, File(_imagePath!));
+        assert(AuthService.currentUser() != null);
+
         Navigator.pop(context);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => TabView()));
@@ -95,8 +105,12 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
             MainTextInput("Email", "Digite seu email", _teEmail),
             MainTextInput("Senha", "Digite sua senha", _tePassword,
                 hideText: true),
-            MainTextInput("Confirmar sua senha", "Confirme sua senha",
-                _tePasswordConfirmation,hideText: true,),
+            MainTextInput(
+              "Confirmar sua senha",
+              "Confirme sua senha",
+              _tePasswordConfirmation,
+              hideText: true,
+            ),
             MainTextInput("Telefone", "Digite seu telefone", _tePhone),
             MainTextInput("CEP", "Digite seu CEP", _teCEP),
             MainTextInput("Rua", "Rua e número", _teAddress),
@@ -107,6 +121,14 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
               });
             }),
             MainTextArea("Bio", "Fale um pouco sobre você", _teBio),
+            ElevatedButton(
+                onPressed: () async {
+                  final picker = ImagePicker();
+                  final image =
+                      await picker.pickImage(source: ImageSource.gallery);
+                  _imagePath = image!.path;
+                },
+                child: const Text("Selecionar Foto")),
             Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
                 child: ElevatedButton(

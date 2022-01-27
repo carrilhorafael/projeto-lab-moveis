@@ -4,6 +4,7 @@ import 'package:projeto_lab/domain/services/user_service.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
+import 'package:projeto_lab/util/geo.dart';
 
 class AuthService {
   final FirebaseAuth auth;
@@ -30,16 +31,12 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
-          print('The password provided is too weak.');
-          break;
+          throw Exception('The password provided is too weak.');
         case 'email-already-in-use':
-          print('The account already exists for that email.');
-          break;
+          throw Exception('The account already exists for that email.');
         default:
-          print("An auth error occurred");
+          throw Exception("An auth error occurred");
       }
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -56,6 +53,16 @@ class AuthService {
         throw Exception('Wrong password provided for that user.');
       }
     }
+    await _updateCurrentUserPosition();
+  }
+
+  Future<void> _updateCurrentUserPosition() async {
+    if (_currentUser == null) return;
+
+    final position = await determinePosition();
+    _currentUser!.position = position;
+
+    await userService.update(_currentUser!);
   }
 
   static User? currentUser() {
