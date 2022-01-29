@@ -41,17 +41,29 @@ class _PetsListState extends State<PetsList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List>(
       future: pets,
-      builder: (BuildContext context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {return Text("Erro");}
           else {
             return ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
-              itemBuilder: (context, int index) {
-                return Text("Widget de Pet");
-              }
+              itemBuilder: (BuildContext context, int index) {
+                return PetMiniature(
+                  pet: new Pet(
+                    id: snapshot.data![index].id,
+                    ownerId: snapshot.data![index].ownerId,
+                    name: snapshot.data![index].name,
+                    description: snapshot.data![index].description,
+                    species: snapshot.data![index].species,
+                    race: snapshot.data![index].race,
+                    size: snapshot.data![index].size,
+                    age: snapshot.data![index].age
+                  )
+                );
+              },
+              itemCount: snapshot.data!.length
             );
           }
         } 
@@ -61,10 +73,10 @@ class _PetsListState extends State<PetsList> {
   }
 }
 
-class PetMinuature extends StatelessWidget {
+class PetMiniature extends StatelessWidget {
 
-  // Pet pet;
-  // PetMiniature({this.pet});
+  final Pet pet;
+  PetMiniature({required this.pet});
 
   void navegation(String value){}
 
@@ -79,12 +91,12 @@ class PetMinuature extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text('pet.name'),
-                  Text('pet.age')
+                  Text(pet.name),
+                  Text(pet.age.toString())
                 ]
               ),
-              Text('pet.race'),
-              Expanded(child: Text('pet.description'))
+              Text(pet.race),
+              Expanded(child: Text(pet.description))
             ]
           ),
           SizedBox(
