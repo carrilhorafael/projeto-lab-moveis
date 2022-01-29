@@ -10,6 +10,7 @@ class MyPetsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
+        margin: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Padding(
@@ -19,10 +20,11 @@ class MyPetsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: ElevatedButton(
-                onPressed: null, 
+                onPressed: null, // TODO Navegação para tela de cadastro
                 child: Center(child: Text("Adicionar Pet"))
               )
             ),
+            PetsList()
           ]
         )
       )
@@ -50,16 +52,19 @@ class _PetsListState extends State<PetsList> {
             return ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               itemBuilder: (BuildContext context, int index) {
-                return PetMiniature(
-                  pet: new Pet(
-                    id: snapshot.data![index].id,
-                    ownerId: snapshot.data![index].ownerId,
-                    name: snapshot.data![index].name,
-                    description: snapshot.data![index].description,
-                    species: snapshot.data![index].species,
-                    race: snapshot.data![index].race,
-                    size: snapshot.data![index].size,
-                    age: snapshot.data![index].age
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  child: PetMiniature(
+                    pet: new Pet(
+                      id: snapshot.data![index].id,
+                      ownerId: snapshot.data![index].ownerId,
+                      name: snapshot.data![index].name,
+                      description: snapshot.data![index].description,
+                      species: snapshot.data![index].species,
+                      race: snapshot.data![index].race,
+                      size: snapshot.data![index].size,
+                      age: snapshot.data![index].age
+                    )
                   )
                 );
               },
@@ -78,7 +83,14 @@ class PetMiniature extends StatelessWidget {
   final Pet pet;
   PetMiniature({required this.pet});
 
-  void navegation(String value){}
+  void navegation(String value){
+    if (value == "Excluir") {
+      // TODO Rotina de exclusão de pet
+    }
+    if (value == "Editar") {
+      // TODO Navegação para tela de edição
+    }
+  }
 
    @override
   Widget build(BuildContext context) {
