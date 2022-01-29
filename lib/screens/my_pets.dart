@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projeto_lab/domain/entities/pet.dart';
 
 class MyPetsScreen extends StatelessWidget {
 
@@ -31,23 +32,35 @@ class MyPetsScreen extends StatelessWidget {
 
 class PetsList extends StatefulWidget {
   @override
-  State<PetsList> createState() {
-    _PetsListState();
-    throw UnimplementedError();
-  }
+  _PetsListState createState() => _PetsListState();
 }
 
 class _PetsListState extends State<PetsList> {
-  // TODO Implementar serviço de recuperação de pets
-  // final List<Pet> pets = [];
+  // TODO Implementar serviço de recuperação de pets;
+  final Future <List<Pet>> pets = [] as Future<List<Pet>>; 
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
-      itemBuilder: (BuildContext context, int index) {
-        return Text("Widget de Pet");
+    return FutureBuilder(
+      future: pets,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {return Text("Erro");}
+          else {
+            return ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              itemBuilder: (context, int index) {
+                return Text("Widget de Pet");
+              }
+            );
+          }
+        } 
+        else {return CircularProgressIndicator();}
       }
     );
   }
+}
+
+class PetMinuature extends StatelessWidget {
+  
 }
