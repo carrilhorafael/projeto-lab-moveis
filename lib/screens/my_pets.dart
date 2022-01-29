@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 
 class MyPetsScreen extends StatelessWidget {
@@ -20,7 +19,7 @@ class MyPetsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: ElevatedButton(
-                onPressed: null, // TODO Navegação para tela de cadastro
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => FormPets())), 
                 child: Center(child: Text("Adicionar Pet"))
               )
             ),
@@ -45,7 +44,7 @@ class _PetsListState extends State<PetsList> {
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
       future: pets,
-      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+      builder: ( context, AsyncSnapshot<List> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {return Text("Erro");}
           else {
@@ -83,15 +82,6 @@ class PetMiniature extends StatelessWidget {
   final Pet pet;
   PetMiniature({required this.pet});
 
-  void navegation(String value){
-    if (value == "Excluir") {
-      // TODO Rotina de exclusão de pet
-    }
-    if (value == "Editar") {
-      // TODO Navegação para tela de edição
-    }
-  }
-
    @override
   Widget build(BuildContext context) {
     return SizedBox (
@@ -115,7 +105,14 @@ class PetMiniature extends StatelessWidget {
             width: 20,
             height: 20,
             child: PopupMenuButton(
-              onSelected: navegation,
+              onSelected: (String value) {
+                if (value == "Excluir") {
+                  // TODO Rotina de exclusão de pet
+                }
+                if (value == "Editar") {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FormPets()));
+                }
+              },
               itemBuilder: (BuildContext context) {
                 return {'Editar', 'Excluir'}.map((String choice) {
                   return PopupMenuItem(
