@@ -19,7 +19,7 @@ class MyPetsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: ElevatedButton(
                 onPressed: null, 
-                child: Center(child: Text("Meus Pets"))
+                child: Center(child: Text("Adicionar Pet"))
               )
             ),
           ]
