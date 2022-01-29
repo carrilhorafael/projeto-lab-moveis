@@ -62,5 +62,48 @@ class _PetsListState extends State<PetsList> {
 }
 
 class PetMinuature extends StatelessWidget {
-  
+
+  // Pet pet;
+  // PetMiniature({this.pet});
+
+  void navegation(String value){}
+
+   @override
+  Widget build(BuildContext context) {
+    return SizedBox (
+      width: 300, 
+      height: 100,
+      child: Row (
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text('pet.name'),
+                  Text('pet.age')
+                ]
+              ),
+              Text('pet.race'),
+              Expanded(child: Text('pet.description'))
+            ]
+          ),
+          SizedBox(
+            width: 20,
+            height: 20,
+            child: PopupMenuButton(
+              onSelected: navegation,
+              itemBuilder: (BuildContext context) {
+                return {'Editar', 'Excluir'}.map((String choice) {
+                  return PopupMenuItem(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              }
+            )
+          )
+        ]
+      )
+    );
+  }
 }
