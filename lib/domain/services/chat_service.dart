@@ -54,45 +54,52 @@ class ChatService {
         // this `skip` is used to not duplicate the last message on the first load
         .skip(1)
         .listen((event) {
-      listener(event.docs.first.data());
+      listener(event.docChanges.first.doc.data()!);
     });
-
     return messages.docs.map((e) => e.data()).toList();
   }
 
-  Future<void> send(Message message) {
-        ()async {
-
+  Future<void> send(Message message) async {
+    () async {
       Interest interest = await interestService.find(message.interestId);
       User otherUser = await userService.find(message.senderId);
-      if (interest.userId == message.senderId){
+      if (interest.userId == message.senderId) {
         Pet pet = await petService.find(interest.petId);
         User petOwner = await userService.find(pet.ownerId);
 
-
         OneSignal.shared.postNotification(OSCreateNotification(
           androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
-
           playerIds: [petOwner.playerID],
           content: "${otherUser.name}: ${message.content}",
           heading: "Nova mensagem",
-
-
         ));
-      }else{
+      } else {
         User userInterest = await userService.find(interest.userId);
         OneSignal.shared.postNotification(OSCreateNotification(
           androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
           playerIds: [userInterest.playerID],
           content: "${otherUser.name}:  ${message.content}",
           heading: "Nova mensagem",
-
         ));
-
-
       }
-
     }();
-    return collection(message.interestId).add(message);
+    final ref = await interestService
+        .collection()
+        .doc(message.interestId)
+        .collection("messages")
+        .withConverter<Message>(fromFirestore: (snapshot, _) {
+      if (!snapshot.exists) {
+        throw NotFoundException();
+      }
+      final map = snapshot.data()!;
+      map['id'] = snapshot.id;
+      return Message.fromMap(map);
+    }, toFirestore: (message, _) {
+      final map = message.toMap();
+      map['createdAt'] = FieldValue.serverTimestamp();
+      return map;
+    }).add(message);
+
+    message.createdAt = (await ref.get()).data()!.createdAt;
   }
 }

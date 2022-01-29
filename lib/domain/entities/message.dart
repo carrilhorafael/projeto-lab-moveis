@@ -7,14 +7,12 @@ class Message {
   String interestId;
   String senderId = "";
   String content;
-  late Timestamp createdAt;
+  Timestamp? createdAt;
 
   Message({
     required this.interestId,
     required this.content,
-  }) {
-    createdAt = Timestamp.now();
-  }
+  });
 
   bool isFrom(User user) {
     return senderId == user.id;
