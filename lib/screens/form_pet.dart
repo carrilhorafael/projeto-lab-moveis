@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'components/main_text_area.dart';
 import 'components/main_text_input.dart';
+import 'package:projeto_lab/domain/services/auth_service.dart';
+import 'package:projeto_lab/providers.dart';
 
 class PetFormPage extends StatelessWidget {
 
@@ -38,7 +40,8 @@ class _PetFormState extends ConsumerState<PetForm>  {
   final _teRace = TextEditingController();
   final _teSpecies = TextEditingController();
   final _teDescription = TextEditingController();
-
+  
+  String? _imagePath;
   Size? _size;
 
   @override
@@ -61,12 +64,13 @@ class _PetFormState extends ConsumerState<PetForm>  {
         size: _size!,
         age: int.tryParse(_teAge.value.toString())!,
       );
-      // TODO Realizar operação com pet
-      // Service.register().then((_) async {
-      //   final Service = ref.read();
-      //   assert(AuthService.currentUser() != null);
-      //   Navigator.pop(context);
-      // }).onError((e, _) {print(e)});
+      //  TODO Realizar operação com pet
+      //  Service.register().then((_) async {
+      //    final Service = ref.read();
+      //    assert(AuthService.currentUser() != null);
+      //    await userService.uploadImage(pet.id, File(_imagePath!));
+      //    Navigator.pop(context);
+      //  }).onError((e, _) {print(e)});
     }
 
     return SingleChildScrollView(
