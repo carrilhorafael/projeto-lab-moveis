@@ -84,7 +84,7 @@ class TestPage extends ConsumerWidget {
                   MaterialPageRoute(
                       builder: (context) => // LatLng são pegos do
                           Background(
-                              child: SwipeScreen(SearchOptions(maxAge: 10, maxDistance: 10))
+                              child: SwipeScreen()
                             )
                           ),
                 );

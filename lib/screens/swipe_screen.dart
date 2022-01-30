@@ -11,7 +11,7 @@ import 'package:projeto_lab/domain/services/interest_service.dart';
 import '../providers.dart';
 // import 'package:flutter_riverpod/src/consumer.dart';
 
-class Content {
+class Card {
     final String name;
     final int age;
     final String breed;
@@ -19,14 +19,10 @@ class Content {
     final String petId;
     final AssetImage image;
 
-    Content({required this.name, required this.age, required this.breed, required this.description, required this.image, required this.petId});
+    Card({required this.name, required this.age, required this.breed, required this.description, required this.image, required this.petId});
 }
 
 class SwipeScreen extends ConsumerStatefulWidget {
-  SwipeScreen(this.searchOptions);
-  final SearchOptions searchOptions;
-  // UserMap(this.sourceUser, this.destinationUser);
-  // final LatLng sourceUser;
 
   @override
   _SwipeScreenState createState() => _SwipeScreenState();
@@ -34,7 +30,6 @@ class SwipeScreen extends ConsumerStatefulWidget {
 
 class _SwipeScreenState extends ConsumerState<SwipeScreen> {
   List<SwipeItem> _swipeItems = <SwipeItem>[];
-  List<Pet> _pets = <Pet>[];
   MatchEngine? _matchEngine;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -44,20 +39,18 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
     super.initState();
 
     void addAnimalCards() async {
-      final petService = ref.read(petServiceProvider);
+      // final petService = ref.read(petServiceProvider);
       final searchService = ref.read(petSearchServiceProvider);
-      final _pets = await searchService.searchMore(widget.searchOptions);
+      final _pets = [Pet(species: 'a',age: 1,name: 'a',ownerId: 'a',description: 'a',race: 'a',size: Size.small)];
+      // final _pets = await searchService.searchMore(await searchService.retrieve());
 
-      
-      // print(_pets);
-
-      // loop animals and build Content
+      // loop animals and build Cards
       final interestService = ref.read(interestServiceProvider);
       for (int i = 0; i < _pets.length; i++) {
         // final imageUrl = await petService.fetchImagesURL(_pets[0].id);
         // final image = Image.network(imageUrl[0]);
         _swipeItems.add(SwipeItem(
-            content: Content(name: _pets[i].name, age: _pets[i].age, breed: _pets[i].race, description: _pets[i].description, image: AssetImage('images/petHomeScreen.png'), petId: _pets[i].id),
+            content: Card(name: _pets[i].name, age: _pets[i].age, breed: _pets[i].race, description: _pets[i].description, image: AssetImage('images/petHomeScreen.png'), petId: _pets[i].id),
             likeAction: () async {
               await interestService.add(Interest(petId: _pets[i].id, userId: AuthService.currentUser()!.id, status: Status.accepted));
             },
@@ -79,6 +72,70 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
   }
 
+  // Retorna SwipeCards (caso tenha cartas no deck) ou Container (caso vazio)
+  // estile de acordo.
+  Widget deck(int amountOfCards) {
+    if(amountOfCards > 0){
+      return SwipeCards(
+        matchEngine: _matchEngine!,
+        itemBuilder: (BuildContext context, int index) {
+          if(_swipeItems.length < 1){
+            return SizedBox();
+          } // should've been a loader
+          return Container (
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: _swipeItems[index].content.image,
+                fit: BoxFit.cover,
+                repeat: ImageRepeat.noRepeat,
+              ),
+            ),
+            child: Row (
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(
+                            text: _swipeItems[index].content.name,
+                            style: TextStyle(color: Colors.white)
+                          )),
+                          RichText(
+                          text: TextSpan(
+                            text: _swipeItems[index].content.age.toString(),
+                            style: TextStyle(color: Colors.white)
+                          )),
+                      ]
+                    ),
+                    RichText(
+                          text: TextSpan(
+                            text: _swipeItems[index].content.breed,
+                            style: TextStyle(color: Colors.white)
+                          )),
+                    Expanded(child: RichText(
+                          text: TextSpan(
+                            text: _swipeItems[index].content.description,
+                            style: TextStyle(color: Colors.white)
+                          ))
+                        ),
+                  ]
+                )
+              ]
+            )
+          );
+        },
+        onStackFinished: () {
+        },
+        itemChanged: (SwipeItem item, int index) {
+        },
+        upSwipeAllowed: true,
+        fillSpace: true,
+      );
+    }
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,62 +144,7 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
           child: Stack(
             children: [Container(
               height: MediaQuery.of(context).size.height - kToolbarHeight,
-              child: SwipeCards(
-                matchEngine: _matchEngine!,
-                itemBuilder: (BuildContext context, int index) {
-                  if(_swipeItems.length < 1){
-                    return SizedBox();
-                  } // should've been a loader
-                  return Container (
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: _swipeItems[index].content.image,
-                        fit: BoxFit.cover,
-                        repeat: ImageRepeat.noRepeat,
-                      ),
-                    ),
-                    child: Row (
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                RichText(
-                                  text: TextSpan(
-                                    text: _swipeItems[index].content.name,
-                                    style: TextStyle(color: Colors.white)
-                                  )),
-                                  RichText(
-                                  text: TextSpan(
-                                    text: _swipeItems[index].content.age.toString(),
-                                    style: TextStyle(color: Colors.white)
-                                  )),
-                              ]
-                            ),
-                            RichText(
-                                  text: TextSpan(
-                                    text: _swipeItems[index].content.breed,
-                                    style: TextStyle(color: Colors.white)
-                                  )),
-                            Expanded(child: RichText(
-                                  text: TextSpan(
-                                    text: _swipeItems[index].content.description,
-                                    style: TextStyle(color: Colors.white)
-                                  ))
-                                ),
-                          ]
-                        )
-                      ]
-                    )
-                  );
-                },
-                onStackFinished: () {
-                },
-                itemChanged: (SwipeItem item, int index) {
-                },
-                upSwipeAllowed: true,
-                fillSpace: true,
-              ),
+              child: deck(_swipeItems.length)
             ),
 
             // Botões, tira a necessidade de swipe

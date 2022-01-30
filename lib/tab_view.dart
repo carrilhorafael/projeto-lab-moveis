@@ -3,6 +3,7 @@ import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/conversations.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/profile_screen.dart';
+import 'package:projeto_lab/screens/swipe_screen.dart';
 import 'domain/entities/user.dart';
 import 'domain/services/auth_service.dart';
 import 'screens/shared/background.dart';
@@ -20,10 +21,7 @@ class _TabViewState extends ConsumerState<TabView> {
 
   @override
   void initState() {
-
-
     () async {
-
       final status = await OneSignal.shared.getDeviceState();
       final String? osUserID = status!.userId;
       User? currentUser = AuthService.currentUser();
@@ -33,8 +31,8 @@ class _TabViewState extends ConsumerState<TabView> {
 
       final userServ = ref.read(userServiceProvider);
       await userServ.update(currentUser);
-
     }();
+    super.initState();
   }
 
   @override
@@ -44,7 +42,7 @@ class _TabViewState extends ConsumerState<TabView> {
         body: Background(
           child: TabBarView(
             children: [
-              Center(child: Text('Animal Search')),
+              SwipeScreen(),
               SearchSettingsPage(),
               Conversations(),
               ProfilePage(AuthService.currentUser()!),

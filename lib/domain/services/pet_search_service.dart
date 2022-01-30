@@ -41,11 +41,11 @@ class PetSearchService {
     await prefs.setString(optionsKey, options.toJson());
   }
 
-  Future<SearchOptions?> retrieve() async {
+  Future<SearchOptions> retrieve() async {
     final prefs = await SharedPreferences.getInstance();
     final content = prefs.getString(optionsKey);
     if (content == null) {
-      return null;
+      return SearchOptions(maxAge: 99, maxDistance: 1000);
     }
     return SearchOptions.fromJson(content);
   }
