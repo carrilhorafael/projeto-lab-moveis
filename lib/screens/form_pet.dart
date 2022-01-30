@@ -7,6 +7,7 @@ import 'components/main_text_area.dart';
 import 'components/main_text_input.dart';
 
 class PetFormPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,6 @@ class _PetFormState extends ConsumerState<PetForm>  {
   final _teAge = TextEditingController();
   final _teRace = TextEditingController();
   final _teSpecies = TextEditingController();
-  final _teSize = TextEditingController();
   final _teDescription = TextEditingController();
 
   Size? _size;
@@ -51,16 +51,17 @@ class _PetFormState extends ConsumerState<PetForm>  {
       );
     }).toList();
 
-    void _submit() { 
-      final Pet user = new Pet(
-        ownerId: this.ownerId,
-        name: _teName.value,
-        description: _teDescription.value,
-        species: _teSpecies.value,
-        race: _teRace.value,
-        size: _teSize.value,
-        age: int.tryParse(_teAge.value),
+    void _create() { 
+      final Pet pet = new Pet(
+        ownerId: "0", // TODO Recuperar Id de usuario
+        name: _teName.value.toString(),
+        description: _teDescription.value.toString(),
+        species: _teSpecies.value.toString(),
+        race: _teRace.value.toString(),
+        size: _size!,
+        age: int.tryParse(_teAge.value.toString())!,
       );
+      // TODO Realizar operação com pet
       // Service.register().then((_) async {
       //   final Service = ref.read();
       //   assert(AuthService.currentUser() != null);
@@ -85,7 +86,7 @@ class _PetFormState extends ConsumerState<PetForm>  {
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
               child: ElevatedButton(
-                onPressed: () => _submit(), 
+                onPressed: () => _create(), 
                 child: const Text("Salvar")
               )
             ),

@@ -112,7 +112,8 @@ class PetMiniature extends StatelessWidget {
                   // TODO Rotina de exclusão de pet
                 }
                 if (value == "Editar") {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PetForm()));
+                  // TODO Rotina de atualização de pet
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => PetFormPage()));
                 }
               },
               itemBuilder: (BuildContext context) {
