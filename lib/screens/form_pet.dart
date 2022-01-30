@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
+import 'components/main_text_area.dart';
+import 'components/main_text_input.dart';
 
 class PetFormPage extends StatelessWidget {
   @override
@@ -36,13 +39,15 @@ class _PetFormState extends ConsumerState<PetForm>  {
   final _teSize = TextEditingController();
   final _teDescription = TextEditingController();
 
+  Size? _size;
+
   @override
   Widget build(BuildContext context) {
 
-    final _sizes = ['small', 'medium', 'big'].map((e) {
+    final _sizes = Size.values.map((Size e) {
       return DropdownMenuItem<Size>(
-        child: Text(e),
-        value: Size.e,
+        child: Text("${describeEnum(e)}"),
+        value: e,
       );
     }).toList();
 
