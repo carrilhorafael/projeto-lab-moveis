@@ -1,154 +1,92 @@
 import 'package:flutter/material.dart' hide State;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart';
+import 'package:projeto_lab/domain/entities/Interest.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart';
+import 'package:projeto_lab/domain/entities/message.dart';
+import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
+import 'package:projeto_lab/domain/services/auth_service.dart';
+import 'package:projeto_lab/domain/services/user_service.dart';
+import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/chat.dart';
 
 class Conversations extends ConsumerStatefulWidget {
   Conversations({Key? key}) : super(key: key);
+  final User currentUser = AuthService.currentUser()!;
 
   @override
   _ConversationsState createState() => _ConversationsState();
 }
 
-class Conversation {
-  final User recipient;
-  List<Message> messages;
-
-  Conversation({
-    required this.recipient,
-    required this.messages,
-  });
-
-  Message last() {
-    return messages[messages.length - 1];
-  }
-}
-
-class Message {
-  final String content;
-  final User sender;
-
-  Message({
-    required this.content,
-    required this.sender,
-  });
-}
-
 class _ConversationsState extends ConsumerState<Conversations> {
-  static List<Conversation> _conversations = [
-    Conversation(recipient: _recipients[0], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[0]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[0]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[1], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[1]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[1]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[2], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[2]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[2]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[3], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[3], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[3], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ]),
-    Conversation(recipient: _recipients[3], messages: [
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-      Message(content: "Uma mensagem legal", sender: _recipients[3]),
-      Message(content: "Uma mensagem legal", sender: myUser),
-    ])
-  ];
+  static List<Interest> _interests = [];
+  static List<Message> _lastMessages = [];
+  static List<User> _users = [];
 
-  static User myUser = User(
-      name: "Eduardo Canellas",
-      email: "eduado@email.com",
-      phone: "(21)98888-8888",
-      description: "Um dev muito legal",
-      address: Address(
-          postalCode: "22222-000",
-          address: "Rua dos Devs, 32, Niteroi",
-          complement: "Casa 1",
-          state: State("Rio de Janeiro", "RJ")));
+  @override
+  void initState() {
+    super.initState();
 
-  static List<User> _recipients = [
-    User(
-        name: "Eduardo Canellas",
-        email: "eduado@email.com",
-        phone: "(21)98888-8888",
-        description: "Um dev muito legal",
-        address: Address(
-            postalCode: "22222-000",
-            address: "Rua dos Devs, 32, Niteroi",
-            complement: "Casa 1",
-            state: State("Rio de Janeiro", "RJ"))),
-    User(
-        name: "Rafael Kanazawa",
-        email: "kana@email.com",
-        phone: "(21)98888-8888",
-        description: "Um dev muito legal",
-        address: Address(
-            postalCode: "22222-000",
-            address: "Rua dos Devs, 32, Niteroi",
-            complement: "Casa 1",
-            state: State("Rio de Janeiro", "RJ"))),
-    User(
-        name: "Gyselle Mello",
-        email: "gyselle@email.com",
-        phone: "(21)98888-8888",
-        description: "Um dev muito legal",
-        address: Address(
-            postalCode: "22222-000",
-            address: "Rua dos Devs, 32, Niteroi",
-            complement: "Casa 1",
-            state: State("Rio de Janeiro", "RJ"))),
-    User(
-        name: "Ricardo",
-        email: "ricardo@email.com",
-        phone: "(21)98888-8888",
-        description: "Um dev muito legal",
-        address: Address(
-            postalCode: "22222-000",
-            address: "Rua dos Devs, 32, Niteroi",
-            complement: "Casa 1",
-            state: State("Rio de Janeiro", "RJ"))),
-    User(
-        name: "Brunin",
-        email: "brunin@email.com",
-        phone: "(21)98888-8888",
-        description: "Um dev muito legal",
-        address: Address(
-            postalCode: "22222-000",
-            address: "Rua dos Devs, 32, Niteroi",
-            complement: "Casa 1",
-            state: State("Rio de Janeiro", "RJ")))
-  ];
+    () async {
+      final petService = ref.read(petServiceProvider);
+      final userService = ref.read(userServiceProvider);
+      final interestService = ref.read(interestServiceProvider);
+
+      final interests = await interestService.findInterests(widget.currentUser);
+      List<Message> lastMessages = [];
+      List<User> users = [];
+
+      // my interests
+      {
+        for (final interest in interests) {
+          final chatService = ref.read(chatServiceProvider);
+          final lastMessage = await chatService.lastMessage(interest);
+
+          lastMessages.add(lastMessage);
+        }
+
+        for (final interest in interests) {
+          final pet = await petService.find(interest.petId);
+          final user = await userService.find(pet.ownerId);
+
+          users.add(user);
+        }
+      }
+
+      // interests on my pets
+      {
+        final myPets = await petService.ownedBy(widget.currentUser.id);
+
+        for (final pet in myPets) {
+          final petInterests = await interestService.findInteressed(pet);
+          interests.addAll(petInterests);
+
+          for (final interest in petInterests) {
+            final chatService = ref.read(chatServiceProvider);
+            final lastMessage = await chatService.lastMessage(interest);
+
+            lastMessages.add(lastMessage);
+          }
+
+          for (final interest in petInterests) {
+            final user = await userService.find(interest.userId);
+            users.add(user);
+          }
+        }
+      }
+
+      setState(() {
+        _interests = interests;
+        _lastMessages = lastMessages;
+        _users = users;
+      });
+    }();
+  }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -157,9 +95,14 @@ class _ConversationsState extends ConsumerState<Conversations> {
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                 height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
-                    itemCount: _conversations.length,
+                    itemCount: _interests.length,
                     itemBuilder: (context, index) {
-                      Conversation conversa = _conversations[index];
+                      Interest interest = _interests[index];
+                      if (_lastMessages.length == 0 || _users.length == 0) {
+                        return Text("Carregando ...");
+                      }
+
+                      Message lastMessage = _lastMessages[index];
                       return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -172,16 +115,18 @@ class _ConversationsState extends ConsumerState<Conversations> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Chat()));
+                                      builder: (context) =>
+                                          Chat(interest, _users[index])));
                             },
                             contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey,
                             ),
-                            title: Text(conversa.recipient.name,
+                            title: Text(_users[index].name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16)),
-                            subtitle: Text(conversa.last().content,
+                            subtitle: Text(lastMessage.content,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Colors.grey, fontSize: 14)),
                           )));

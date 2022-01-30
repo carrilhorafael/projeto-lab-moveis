@@ -23,7 +23,7 @@ Future<void> main() async {
       store = FakeFirebaseFirestore();
       userService = UserService(store);
       petService = PetService(store, userService);
-      service = InterestService(store);
+      service = InterestService(store, petService, userService);
 
       user = validUser();
       await userService.create(user);

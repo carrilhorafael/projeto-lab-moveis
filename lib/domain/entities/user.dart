@@ -11,6 +11,7 @@ class User {
   String email;
   String phone;
   String description;
+  String playerID;
   Position? position;
 
   User({
@@ -20,6 +21,7 @@ class User {
     required this.email,
     required this.phone,
     this.description = "",
+    this.playerID = "",
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +31,7 @@ class User {
       'email': email,
       'phone': phone,
       'description': description,
+      'playerID':playerID,
       'position': position?.toJson(),
     };
   }
@@ -41,6 +44,7 @@ class User {
       email: map['email'],
       phone: map['phone'],
       description: map['description'],
+      playerID: map['playerID'],
     );
     final position = map['position'];
 

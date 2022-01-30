@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projeto_lab/screens/login.dart';
 import 'package:projeto_lab/screens/signup.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+
+
+
+
+class BlocHomeOneSignal {
+
+  void initOneSignal() {
+    OneSignal.shared.setAppId("76726102-6074-498c-a4fb-2dfd1db62961");
+
+
+  }
+
+
+}
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -13,6 +29,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    var bloc = BlocHomeOneSignal();
+    bloc.initOneSignal();
+
+
+    super.initState();
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

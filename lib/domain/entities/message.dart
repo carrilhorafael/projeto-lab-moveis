@@ -1,18 +1,19 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 
 class Message {
   String interestId;
   String senderId = "";
   String content;
-  late DateTime createdAt;
+  late Timestamp createdAt;
 
   Message({
     required this.interestId,
     required this.content,
   }) {
-    createdAt = DateTime.now();
+    createdAt = Timestamp.now();
   }
 
   bool isFrom(User user) {
