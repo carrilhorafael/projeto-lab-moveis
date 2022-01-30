@@ -41,6 +41,8 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     void addAnimalCards() async {
       final petService = ref.read(petServiceProvider);
       final searchService = ref.read(petSearchServiceProvider);
@@ -75,7 +77,6 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
 
     addAnimalCards();
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
-    super.initState();
   }
 
   @override

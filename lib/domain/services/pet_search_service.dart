@@ -17,8 +17,8 @@ class PetSearchService {
     // TODO filter by distance!
     var query = petService
         .query()
-        .limit(maxAmount);
-        // .where("age", isLessThanOrEqualTo: options.maxAge);
+        .limit(maxAmount)
+        .where("age", isLessThanOrEqualTo: options.maxAge);
 
     final whereFields = {
       "size": options.sizes,
@@ -27,9 +27,9 @@ class PetSearchService {
     };
 
     whereFields.forEach((key, fieldSet) {
-      // if (fieldSet.isNotEmpty) {
-      //   query = query.where(key, whereIn: fieldSet.toList());
-      // }
+      if (fieldSet.isNotEmpty) {
+        query = query.where(key, whereIn: fieldSet.toList());
+      }
     });
 
     final snapshot = await query.get();
