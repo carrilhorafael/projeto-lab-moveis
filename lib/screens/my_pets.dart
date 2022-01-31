@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'form_pet.dart';
 
 class MyPetsScreen extends StatelessWidget {
@@ -68,8 +69,7 @@ class _PetsListState extends ConsumerState<PetsList> {
                         race: snapshot.data![index].race,
                         size: snapshot.data![index].size,
                         age: snapshot.data![index].age
-                      ),
-                      imageURL: petService.fetchImagesURL(snapshot.data![index].id)[0],
+                      )
                     )
                   ),
                   background: Container( color: Colors.red),
@@ -90,14 +90,34 @@ class _PetsListState extends ConsumerState<PetsList> {
   }
 }
 
-class PetMiniature extends StatelessWidget {
+class PetMiniature extends ConsumerStatefulWidget {
 
   final Pet pet;
-  final String imageURL;
-  PetMiniature({required this.pet, required this.imageURL});
 
-   @override
+  PetMiniature({required this.pet});
+
+  @override
+  _PetMiniatureState createState() => _PetMiniatureState(pet);
+}
+
+class _PetMiniatureState extends ConsumerState<PetMiniature>  {
+
+  Pet pet;
+  String imageURL = "";
+  _PetMiniatureState(this.pet);
+
+  @override
   Widget build(BuildContext context) {
+
+    final petService = ref.watch(petServiceProvider);
+
+    if (imageURL == "") {
+      setState(() async{
+        List imagesURL = await petService.fetchImagesURL(pet.id);
+        imageURL = imagesURL[0];
+      });
+    }
+
     return Column(
       children: <Widget>[
         Image.network(
