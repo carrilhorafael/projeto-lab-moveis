@@ -45,7 +45,7 @@ class PetSearchService {
     final prefs = await SharedPreferences.getInstance();
     final content = prefs.getString(optionsKey);
     if (content == null) {
-      return SearchOptions(maxAge: 99, maxDistance: 1000);
+      return SearchOptions(maxAge: 999, maxDistance: 1000);
     }
     return SearchOptions.fromJson(content);
   }

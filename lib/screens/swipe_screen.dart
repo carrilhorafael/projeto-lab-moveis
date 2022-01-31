@@ -41,8 +41,7 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
     void addAnimalCards() async {
       // final petService = ref.read(petServiceProvider);
       final searchService = ref.read(petSearchServiceProvider);
-      final _pets = [Pet(species: 'a',age: 1,name: 'a',ownerId: 'a',description: 'a',race: 'a',size: Size.small)];
-      // final _pets = await searchService.searchMore(await searchService.retrieve());
+      final _pets = await searchService.searchMore(await searchService.retrieve());
 
       // loop animals and build Cards
       final interestService = ref.read(interestServiceProvider);
