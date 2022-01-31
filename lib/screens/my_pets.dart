@@ -40,7 +40,6 @@ class PetsList extends ConsumerStatefulWidget {
 }
 
 class _PetsListState extends ConsumerState<PetsList> {
-  // TODO Implementar serviço de recuperação de pets;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +68,8 @@ class _PetsListState extends ConsumerState<PetsList> {
                         race: snapshot.data![index].race,
                         size: snapshot.data![index].size,
                         age: snapshot.data![index].age
-                      )
+                      ),
+                      imageURL: petService.fetchImagesURL(snapshot.data![index].id)[0],
                     )
                   ),
                   background: Container( color: Colors.red),
@@ -93,25 +93,38 @@ class _PetsListState extends ConsumerState<PetsList> {
 class PetMiniature extends StatelessWidget {
 
   final Pet pet;
-  PetMiniature({required this.pet});
+  final String imageURL;
+  PetMiniature({required this.pet, required this.imageURL});
 
    @override
   Widget build(BuildContext context) {
-    return SizedBox (
-      width: 300, 
-      height: 100,
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(pet.name),
-              Text(pet.age.toString())
-            ]
-          ),
-          Text(pet.race),
-          Expanded(child: Text(pet.description))
-        ]
-      )
+    return Column(
+      children: <Widget>[
+        Image.network(
+          imageURL,
+          width: 300,
+          height: 100
+        ),
+        SizedBox (
+          width: 300, 
+          height: 100,
+          child: Container(
+            margin: EdgeInsets.all(5.0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(pet.name),
+                    Text(pet.age.toString())
+                  ]
+                ),
+                Text(pet.race),
+                Expanded(child: Text(pet.description))
+              ]
+            )
+          )
+        )
+      ]
     );
   }
 }
