@@ -45,7 +45,7 @@ class _PetsListState extends ConsumerState<PetsList> {
   @override
   Widget build(BuildContext context) {
     final petService = ref.watch(petServiceProvider);
-    final Future <List<Pet>> pets = petService.ownedBy(AuthService.currentUser()); 
+    final Future<List<Pet>> pets = petService.ownedBy(AuthService.currentUser()); 
 
     return FutureBuilder<List>(
       future: pets,
