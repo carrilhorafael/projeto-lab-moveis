@@ -18,21 +18,21 @@ class TabView extends ConsumerStatefulWidget {
 }
 
 class _TabViewState extends ConsumerState<TabView> {
-
   @override
   void initState() {
+    super.initState();
+
     () async {
       final status = await OneSignal.shared.getDeviceState();
       final String? osUserID = status!.userId;
       User? currentUser = AuthService.currentUser();
-      print("user::::: ${osUserID}");
+      print("user::::: $osUserID");
 
       currentUser!.playerID = osUserID!;
 
       final userServ = ref.read(userServiceProvider);
       await userServ.update(currentUser);
     }();
-    super.initState();
   }
 
   @override
