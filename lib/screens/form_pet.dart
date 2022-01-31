@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +56,11 @@ class _PetFormState extends ConsumerState<PetForm>  {
       );
     }).toList();
 
+    final petService = ref.watch(petServiceProvider);
+
     void _create() { 
       final Pet pet = new Pet(
-        ownerId: "0", // TODO Recuperar Id de usuario
+        ownerId: AuthService.currentUser().id, 
         name: _teName.value.toString(),
         description: _teDescription.value.toString(),
         species: _teSpecies.value.toString(),
@@ -64,13 +68,11 @@ class _PetFormState extends ConsumerState<PetForm>  {
         size: _size!,
         age: int.tryParse(_teAge.value.toString())!,
       );
-      //  TODO Realizar operação com pet
-      //  Service.register().then((_) async {
-      //    final Service = ref.read();
-      //    assert(AuthService.currentUser() != null);
-      //    await userService.uploadImage(pet.id, File(_imagePath!));
-      //    Navigator.pop(context);
-      //  }).onError((e, _) {print(e)});
+
+      petService.create(pet).then((_) async{
+        await petService.uploadImage(pet.id, File(_imagePath!));
+        Navigator.pop(context);
+      }).onError((e, _) {print(e);});
     }
 
     return SingleChildScrollView(
