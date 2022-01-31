@@ -23,7 +23,7 @@ class MyPetsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PetForm())), 
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PetFormPage())), 
                 child: Center(child: Text("Adicionar Pet"))
               )
             ),
