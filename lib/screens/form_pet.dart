@@ -11,21 +11,14 @@ import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 
 class PetFormPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
         body: Container(
-          margin: EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Text("Adicionar Pet"),
-              PetForm()
-            ]
-        )
-      )
-    );
+            margin: EdgeInsets.all(20.0),
+            child:
+                Column(children: <Widget>[Text("Adicionar Pet"), PetForm()])));
   }
 }
 
@@ -36,19 +29,18 @@ class PetForm extends ConsumerStatefulWidget {
   }
 }
 
-class _PetFormState extends ConsumerState<PetForm>  { 
+class _PetFormState extends ConsumerState<PetForm> {
   final _teName = TextEditingController();
   final _teAge = TextEditingController();
   final _teRace = TextEditingController();
   final _teSpecies = TextEditingController();
   final _teDescription = TextEditingController();
-  
+
   String? _imagePath;
   Size? _size;
 
   @override
   Widget build(BuildContext context) {
-
     final _sizes = Size.values.map((Size e) {
       return DropdownMenuItem<Size>(
         child: Text("${describeEnum(e)}"),
@@ -58,55 +50,54 @@ class _PetFormState extends ConsumerState<PetForm>  {
 
     final petService = ref.watch(petServiceProvider);
 
-    void _create() { 
+    void _create() {
       final Pet pet = new Pet(
-        ownerId: AuthService.currentUser()!.id, 
-        name: _teName.value.toString(),
-        description: _teDescription.value.toString(),
-        species: _teSpecies.value.toString(),
-        race: _teRace.value.toString(),
+        ownerId: AuthService.currentUser()!.id,
+        name: _teName.value.text,
+        description: _teDescription.value.text,
+        species: _teSpecies.value.text,
+        race: _teRace.value.text,
         size: _size!,
-        age: int.tryParse(_teAge.value.toString())!,
+        age: int.parse(_teAge.value.text),
       );
 
-      petService.create(pet).then((_) async{
+      petService.create(pet).then((_) async {
         await petService.uploadImage(pet.id, File(_imagePath!));
         Navigator.pop(context);
-      }).onError((e, _) {print(e);});
+      }).onError((e, _) {
+        print(e);
+      });
     }
 
     return SingleChildScrollView(
-      child: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Crie uma conta"),
-            ElevatedButton(
+        child: Form(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+          Text("Crie uma conta"),
+          ElevatedButton(
               onPressed: () async {
                 final picker = ImagePicker();
-                final image = await picker.pickImage(source: ImageSource.gallery);
+                final image =
+                    await picker.pickImage(source: ImageSource.gallery);
                 _imagePath = image!.path;
               },
-              child: const Text("Selecionar Foto")
-            ),
-            MainTextInput("Nome", "Digite o nome do pet", _teName),
-            MainTextInput("Especie", "Digite seu email", _teSpecies),
-            MainTextInput("Raça", "Digite sua senha", _teRace),
-            SizeDropdown(_sizes, "Selecione um Tamanho", "Tamanho", (size) {
-              setState(() {_size = size;});
-            }),
-            MainTextArea("Bio", "Fale um pouco sobre o pet", _teDescription),
-            Padding(
+              child: const Text("Selecionar Foto")),
+          MainTextInput("Nome", "Digite o nome do pet", _teName),
+          MainTextInput("Idade", "Digite a idade do pet", _teAge),
+          MainTextInput("Especie", "Digite a especie", _teSpecies),
+          MainTextInput("Raça", "Digite a raça", _teRace),
+          SizeDropdown(_sizes, "Selecione um Tamanho", "Tamanho", (size) {
+            setState(() {
+              _size = size;
+            });
+          }),
+          MainTextArea("Bio", "Fale um pouco sobre o pet", _teDescription),
+          Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
               child: ElevatedButton(
-                onPressed: () => _create(), 
-                child: const Text("Salvar")
-              )
-            ),
-          ]
-        )
-      )
-    );
+                  onPressed: () => _create(), child: const Text("Salvar"))),
+        ])));
   }
 }
 
@@ -121,16 +112,15 @@ class SizeDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          Text(_label),
-          DropdownButtonFormField<Size>(
-            items: _items,
-            onChanged: onChanged,
-            hint: Text(_hint),
-          ),
-        ],
-      )
-    );
+        child: Column(
+      children: [
+        Text(_label),
+        DropdownButtonFormField<Size>(
+          items: _items,
+          onChanged: onChanged,
+          hint: Text(_hint),
+        ),
+      ],
+    ));
   }
 }
