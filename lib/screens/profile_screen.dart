@@ -6,6 +6,7 @@ import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
+import 'package:projeto_lab/screens/my_pets.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   final User user;
@@ -138,7 +139,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
               onPressed: () {
-                // TODO Caminho para a tela Meus Pets
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetsScreen()));
               },
             ))
       ])),
