@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +81,14 @@ class _PetFormState extends ConsumerState<PetForm>  {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("Crie uma conta"),
+            ElevatedButton(
+              onPressed: () async {
+                final picker = ImagePicker();
+                final image = await picker.pickImage(source: ImageSource.gallery);
+                _imagePath = image!.path;
+              },
+              child: const Text("Selecionar Foto")
+            ),
             MainTextInput("Nome", "Digite o nome do pet", _teName),
             MainTextInput("Especie", "Digite seu email", _teSpecies),
             MainTextInput("Raça", "Digite sua senha", _teRace),
