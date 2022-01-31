@@ -39,5 +39,5 @@ final chatServiceProvider = Provider((ref) {
   final interestService = ref.watch(interestServiceProvider);
   final petService = ref.watch(petServiceProvider);
   final userService = ref.watch(userServiceProvider);
-  return ChatService(interestService,petService,userService);
+  return ChatService(interestService, petService, userService);
 });

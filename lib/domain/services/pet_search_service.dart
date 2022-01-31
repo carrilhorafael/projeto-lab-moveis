@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
+import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/domain/services/pet_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +34,10 @@ class PetSearchService {
     });
 
     final snapshot = await query.get();
-    return snapshot.docs.map((e) => e.data()).toList();
+    return snapshot.docs
+        .map((e) => e.data())
+        .where((p) => p.ownerId != AuthService.currentUser()!.id)
+        .toList();
   }
 
   Future<void> save(SearchOptions options) async {

@@ -41,6 +41,7 @@ class _TabViewState extends ConsumerState<TabView> {
       child: Scaffold(
         body: Background(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
               SwipeScreen(),
               SearchSettingsPage(),

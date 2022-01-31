@@ -33,11 +33,16 @@ class ChatService {
             toFirestore: (message, _) => message.toMap());
   }
 
-  Future<Message> lastMessage(Interest interest) async {
+  Future<Message?> lastMessage(Interest interest) async {
     final query = collection(interest.id).orderBy("createdAt");
     final messages = await query.get();
+    final list = messages.docs.map((e) => e.data()).toList();
 
-    return messages.docs.map((e) => e.data()).toList().last;
+    if (list.isEmpty) {
+      return null;
+    } else {
+      return list.last;
+    }
   }
 
   /// `listener` receives new messages. Useful e.g. to update state after receiving a new message.
@@ -61,37 +66,28 @@ class ChatService {
   }
 
   Future<void> send(Message message) {
-        ()async {
-
+    () async {
       Interest interest = await interestService.find(message.interestId);
       User otherUser = await userService.find(message.senderId);
-      if (interest.userId == message.senderId){
+      if (interest.userId == message.senderId) {
         Pet pet = await petService.find(interest.petId);
         User petOwner = await userService.find(pet.ownerId);
 
-
         OneSignal.shared.postNotification(OSCreateNotification(
           androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
-
           playerIds: [petOwner.playerID],
           content: "${otherUser.name}: ${message.content}",
           heading: "Nova mensagem",
-
-
         ));
-      }else{
+      } else {
         User userInterest = await userService.find(interest.userId);
         OneSignal.shared.postNotification(OSCreateNotification(
           androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
           playerIds: [userInterest.playerID],
           content: "${otherUser.name}:  ${message.content}",
           heading: "Nova mensagem",
-
         ));
-
-
       }
-
     }();
     return collection(message.interestId).add(message);
   }
