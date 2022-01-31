@@ -60,7 +60,7 @@ class _PetFormState extends ConsumerState<PetForm>  {
 
     void _create() { 
       final Pet pet = new Pet(
-        ownerId: AuthService.currentUser().id, 
+        ownerId: AuthService.currentUser()!.id, 
         name: _teName.value.toString(),
         description: _teDescription.value.toString(),
         species: _teSpecies.value.toString(),
