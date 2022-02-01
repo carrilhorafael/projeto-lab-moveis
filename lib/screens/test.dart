@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/home.dart';
 
@@ -11,6 +12,8 @@ import 'shared/background.dart';
 
 import 'package:projeto_lab/screens/user_location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:projeto_lab/screens/swipe_screen.dart';
 
 class TestPage extends ConsumerWidget {
   TestPage({Key? key}) : super(key: key);
@@ -70,6 +73,20 @@ class TestPage extends ConsumerWidget {
                           Background(
                               child: UserMap(LatLng(-22.87838, -43.50415),
                                   LatLng(-22.88196, -43.52242)))),
+                );
+              },
+            ),
+            TextButton(
+              child: Text('Testar Swipe'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => // LatLng são pegos do
+                          Background(
+                              child: SwipeScreen()
+                            )
+                          ),
                 );
               },
             ),
