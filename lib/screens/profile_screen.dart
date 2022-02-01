@@ -144,7 +144,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       color: Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
-              onPressed: () { //Função conectada ao botão Meus Pets
+              //Função conectada ao botão Meus Pets
+              onPressed: () { 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetsScreen()));
               },
             ))
