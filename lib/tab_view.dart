@@ -3,6 +3,7 @@ import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/conversations.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/profile_screen.dart';
+import 'package:projeto_lab/screens/swipe_screen.dart';
 import 'domain/entities/user.dart';
 import 'domain/services/auth_service.dart';
 import 'screens/shared/background.dart';
@@ -40,8 +41,9 @@ class _TabViewState extends ConsumerState<TabView> {
       child: Scaffold(
         body: Background(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
-              Center(child: Text('Animal Search')),
+              SwipeScreen(),
               SearchSettingsPage(),
               Conversations(),
               ProfilePage(AuthService.currentUser()!),

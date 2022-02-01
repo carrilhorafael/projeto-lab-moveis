@@ -1,3 +1,6 @@
+/// Este Módulo contém `AuthService`, um serviço relacionado a operações de autenticação
+/// do usuário. É possível logar, se cadastrar e obter o usuário atual do app.
+
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';
@@ -12,6 +15,7 @@ class AuthService {
   static User? _currentUser;
 
   AuthService(this.auth, this.userService) {
+    // This used to be so if the user logs out (for any reason, even a timeout) the app would handle it
     // authListener().listen((loggedIn) {
     //   if (!loggedIn) {
     //     AuthService._currentUser = null;
@@ -20,6 +24,7 @@ class AuthService {
   }
 
   Future<void> register(String email, String password, User user) async {
+    // Auto-explicativo
     try {
       UserCredential userCredential = await this
           .auth

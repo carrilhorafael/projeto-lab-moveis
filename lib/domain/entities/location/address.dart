@@ -1,3 +1,5 @@
+/// Este Módulo contém `Address`, que representa um endereço de um usuário. 
+
 import 'dart:convert';
 
 import 'state.dart';

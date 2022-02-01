@@ -1,3 +1,5 @@
+/// Este Módulo contém `Message`, que representa uma mensagem em um chat de um interesse.
+
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';

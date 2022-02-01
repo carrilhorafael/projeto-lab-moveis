@@ -1,3 +1,6 @@
+/// Este Módulo contém `ChatService`, um serviço que permite o envio e a obtenção
+/// das mensagens do chat de um determinado interesse.
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -33,11 +36,16 @@ class ChatService {
             toFirestore: (message, _) => message.toMap());
   }
 
-  Future<Message> lastMessage(Interest interest) async {
+  Future<Message?> lastMessage(Interest interest) async {
     final query = collection(interest.id).orderBy("createdAt");
     final messages = await query.get();
+    final list = messages.docs.map((e) => e.data()).toList();
 
-    return messages.docs.map((e) => e.data()).toList().last;
+    if (list.isEmpty) {
+      return null;
+    } else {
+      return list.last;
+    }
   }
 
   /// `listener` receives new messages. Useful e.g. to update state after receiving a new message.
@@ -91,10 +99,7 @@ class ChatService {
           heading: "Nova mensagem", //título da notificação
 
         ));
-
-
       }
-
     }();
     return collection(message.interestId).add(message); //Salva a mensagem no firebase
   }

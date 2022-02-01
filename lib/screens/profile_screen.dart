@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
@@ -28,10 +29,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final service = ref.read(userServiceProvider);
     // ignore: unnecessary_statements
     () async {
-      final url = await service.fetchImageURL(widget.user.id);
-      setState(() {
-        this._url = url;
-      });
+      try {
+        final url = await service.fetchImageURL(widget.user.id);
+        setState(() {
+          this._url = url;
+        });
+      } on FirebaseException {
+        // Couldn't retrieve image. Ignore and use default.
+      }
     }();
   }
 
@@ -148,8 +153,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
               //Função conectada ao botão Meus Pets
               onPressed: () {
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetsScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyPetsScreen()));
               },
             ))
       ])),

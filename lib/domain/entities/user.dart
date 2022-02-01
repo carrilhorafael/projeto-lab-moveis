@@ -1,3 +1,6 @@
+/// Este Módulo contém `User`, que representa um usuário na aplicação.
+/// Esse usuário pode ser tanto um dono de pet quanto um interessado em adotar.
+
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
@@ -11,7 +14,7 @@ class User {
   String email;
   String phone;
   String description;
-  String playerID;
+  String playerID; // For notification (onesignal)
   Position? position;
 
   User({

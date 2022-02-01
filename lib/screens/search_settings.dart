@@ -377,7 +377,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
               child: Slider(
                 value: _currentSliderValue,
                 min: 0,
-                max: 12,
+                max: 1000,
                 divisions: 12,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
@@ -421,7 +421,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
               child: Slider(
                 value: _currentSliderValue2,
                 min: 0,
-                max: 12,
+                max: 1200,
                 divisions: 12,
                 label: _currentSliderValue2.round().toString(),
                 onChanged: (double value) {

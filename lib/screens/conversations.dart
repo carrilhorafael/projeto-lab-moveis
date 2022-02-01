@@ -42,7 +42,8 @@ class _ConversationsState extends ConsumerState<Conversations> {
       {
         for (final interest in interests) {
           final chatService = ref.read(chatServiceProvider);
-          final lastMessage = await chatService.lastMessage(interest);
+          final lastMessage = await chatService.lastMessage(interest) ??
+              Message(interestId: "", content: "");
 
           lastMessages.add(lastMessage);
         }
@@ -64,8 +65,9 @@ class _ConversationsState extends ConsumerState<Conversations> {
           interests.addAll(petInterests);
 
           for (final interest in petInterests) {
-            final chatService = ref.read(chatServiceProvider);
-            final lastMessage = await chatService.lastMessage(interest);
+            final chatService = ref.watch(chatServiceProvider);
+            final lastMessage = await chatService.lastMessage(interest) ??
+                Message(interestId: "", content: "");
 
             lastMessages.add(lastMessage);
           }
@@ -76,6 +78,8 @@ class _ConversationsState extends ConsumerState<Conversations> {
           }
         }
       }
+
+      if (!this.mounted) return;
 
       setState(() {
         _interests = interests;

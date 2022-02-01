@@ -5,8 +5,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class UserMap extends StatefulWidget {
   UserMap(this.sourceUser, this.destinationUser);
-  final LatLng sourceUser;
-  final LatLng destinationUser;
+  final LatLng sourceUser; // Starting point
+  final LatLng destinationUser; // End point
 
   @override
   State<UserMap> createState() => UserMapState();
@@ -15,7 +15,7 @@ class UserMap extends StatefulWidget {
 class UserMapState extends State<UserMap> {
   Completer<GoogleMapController> _controller = Completer();
 
-  // pathing
+  // pathing (red path on map between markers)
   PolylinePoints _polylinePoints = PolylinePoints();
   Map<PolylineId, Polyline> _polylines = {};
   List<LatLng> _polylineCoordinates = [];
@@ -32,7 +32,7 @@ class UserMapState extends State<UserMap> {
       setState(() {});
     }
 
-    // query pro google
+    // query to google, returns the points between two markers. Connect the lines and it forms a (proper) path 
     void makeLines() async {
       await _polylinePoints
           .getRouteBetweenCoordinates(

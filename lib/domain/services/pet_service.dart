@@ -1,3 +1,6 @@
+/// Este Módulo contém `PetService`, um serviço que oferece as operações CRUD para pets,
+/// além da obtenção de suas imagens.
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
