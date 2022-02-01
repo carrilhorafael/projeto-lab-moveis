@@ -12,6 +12,7 @@ class AuthService {
   static User? _currentUser;
 
   AuthService(this.auth, this.userService) {
+    // This used to be so if the user logs out (for any reason, even a timeout) the app would handle it
     // authListener().listen((loggedIn) {
     //   if (!loggedIn) {
     //     AuthService._currentUser = null;
@@ -20,6 +21,7 @@ class AuthService {
   }
 
   Future<void> register(String email, String password, User user) async {
+    // Auto-explicativo
     try {
       UserCredential userCredential = await this
           .auth

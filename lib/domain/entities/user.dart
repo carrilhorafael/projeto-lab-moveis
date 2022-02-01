@@ -11,7 +11,7 @@ class User {
   String email;
   String phone;
   String description;
-  String playerID;
+  String playerID; // For notification
   Position? position;
 
   User({
