@@ -6,6 +6,7 @@ import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
+import 'package:projeto_lab/screens/my_pets.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   //Classe para mostrar o perfil de usuário
@@ -144,8 +145,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       color: Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
+
               //Função conectada ao botão Meus Pets
-              onPressed: () { 
+              onPressed: () {
+
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetsScreen()));
               },
             ))
