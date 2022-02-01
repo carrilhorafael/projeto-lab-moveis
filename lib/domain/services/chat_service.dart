@@ -61,31 +61,34 @@ class ChatService {
   }
 
   Future<void> send(Message message) {
+      //Notifica ao usuário que irá receber uma mensagem através do oneSignal
+      //e envia a mensagem
         ()async {
 
       Interest interest = await interestService.find(message.interestId);
-      User otherUser = await userService.find(message.senderId);
+      User otherUser = await userService.find(message.senderId); //Pega o usuário que está enviando a mensagem
+      //Se quem está mandando a mensagem é o usuário interessado no pet
       if (interest.userId == message.senderId){
-        Pet pet = await petService.find(interest.petId);
-        User petOwner = await userService.find(pet.ownerId);
+        Pet pet = await petService.find(interest.petId);  //pega o pet no serviço de pet
+        User petOwner = await userService.find(pet.ownerId); //Pega o dono do pet de interesse no serviço de usuário
 
 
-        OneSignal.shared.postNotification(OSCreateNotification(
-          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
+        OneSignal.shared.postNotification(OSCreateNotification( //envia a notificação
+          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b", //Channel de notificação do android
 
-          playerIds: [petOwner.playerID],
-          content: "${otherUser.name}: ${message.content}",
-          heading: "Nova mensagem",
+          playerIds: [petOwner.playerID], //playerID do device necessário para enviar a notificação
+          content: "${otherUser.name}: ${message.content}", //conteúdo da notificação
+          heading: "Nova mensagem", //título da notificação
 
 
         ));
-      }else{
-        User userInterest = await userService.find(interest.userId);
-        OneSignal.shared.postNotification(OSCreateNotification(
-          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
-          playerIds: [userInterest.playerID],
-          content: "${otherUser.name}:  ${message.content}",
-          heading: "Nova mensagem",
+      }else{ //Se quem está mandando a mensagem é o dono do pet
+        User userInterest = await userService.find(interest.userId); //Chama o serviço de usuário para pegar o usuário
+        OneSignal.shared.postNotification(OSCreateNotification( //envia a notificação
+          androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b", //Channel de notificação do android
+          playerIds: [userInterest.playerID], //playerID do device necessário para enviar a notificação
+          content: "${otherUser.name}:  ${message.content}", //conteúdo da notificação
+          heading: "Nova mensagem", //título da notificação
 
         ));
 
@@ -93,6 +96,6 @@ class ChatService {
       }
 
     }();
-    return collection(message.interestId).add(message);
+    return collection(message.interestId).add(message); //Salva a mensagem no firebase
   }
 }

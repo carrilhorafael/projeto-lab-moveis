@@ -9,7 +9,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 
 class BlocHomeOneSignal {
-
+//Função inicial que seta o AppId necessário para o OneSignal funcionar
   void initOneSignal() {
     OneSignal.shared.setAppId("76726102-6074-498c-a4fb-2dfd1db62961");
 
@@ -20,6 +20,7 @@ class BlocHomeOneSignal {
 }
 
 class HomePage extends StatefulWidget {
+  //Página de entrada do app
   HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
@@ -31,6 +32,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    //Estado inicial inicializa o onesignal
     var bloc = BlocHomeOneSignal();
     bloc.initOneSignal();
 
@@ -40,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-
+  //Constrói o widget
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -57,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                     width: width,
                     height: width * 1.6898,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
+                      image: DecorationImage( //Mostra a imagem da tela inicial
                         image: AssetImage('images/petHomeScreen.png'),
                         fit: BoxFit.cover,
                         repeat: ImageRepeat.noRepeat,
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                           margin: const EdgeInsets.only(top: 20.0, right: 20.0),
                           child: TextButton(
-                            child: Text('ENTRAR',
+                            child: Text('ENTRAR', //Define o botão de entrada
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                               // TODO send to login page
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                MaterialPageRoute( //Vai para a página de login
                                     builder: (context) => Login()),
                               );
                             },
@@ -113,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             Colors.green)),
-                                child: Text('Faça sua conta',
+                                child: Text('Faça sua conta', //Define o botão para criar uma conta
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
@@ -121,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MaterialPageRoute(  //Vai para a página para criar a conta
                                         builder: (context) => SignupPage()),
                                   );
                                 },
