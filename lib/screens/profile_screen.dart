@@ -37,30 +37,30 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   //Constrói o Widget
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    double width = screenSize.width;
+    final screenSize = MediaQuery.of(context).size; //lê o tamanho da tela
+    double width = screenSize.width; //lê a largura da tela
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-          child: Column(children: <Widget>[
+      backgroundColor: Colors.transparent, //seta o backgrond transparente
+      body: SingleChildScrollView( //utiliza um widget do tipo singlechildScrollView
+          child: Column(children: <Widget>[ //Adiciona um widget do tipo coluna
         Row(children: [
-          ClipOval(
+          ClipOval( //Usa um widget do tipo clipOval para arredondar a imagem de perfil
             child: Container(
-                width: 80,
+                width: 80,  //Define a largura e altura da imagem
                 height: 80,
                 decoration: BoxDecoration(
                   image: DecorationImage( //DecorationImage para mostrar a imagem
                     image: _url != null
                         ? Image.network(_url!).image
-                        : AssetImage('images/userProfilePic.jpg'),
+                        : AssetImage('images/userProfilePic.jpg'), //Fornece o caminho da imagem
                     fit: BoxFit.cover,
                     repeat: ImageRepeat.noRepeat,
                   ),
                 )),
           ),
-          SizedBox(width: 10),
-          Align(
+          SizedBox(width: 10), //Adiciona 10 de espaço
+          Align( //Adiciona o nome de usuário
               alignment: Alignment.centerLeft,
               child: Text(widget.user.name, //Nome do usuário
                   style: TextStyle(
@@ -68,8 +68,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       fontWeight: FontWeight.bold,
                       fontSize: 19)))
         ]),
-        SizedBox(height: 25),
-        Align(
+        SizedBox(height: 25), //Adiciona um espaçamento
+        Align( //Adiciona a palavra 'Email'
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: 'Email',
@@ -77,13 +77,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: Colors.white)))),
-        Align(
+        Align( //Adiciona o email do usuário
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: widget.user.email, //Email do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
-        SizedBox(height: 25),
-        Align(
+        SizedBox(height: 25), //Adiciona espaçamento
+        Align( //Adiciona a palavra 'Contato'
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: 'Contato',
@@ -91,13 +91,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: Colors.white)))),
-        Align(
+        Align( //Adiciona o telefone do usuário
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: widget.user.phone, //Telefone do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
-        SizedBox(height: 25),
-        Align(
+        SizedBox(height: 25), //Adiciona espaçamento
+        Align( //Adiciona a palavra 'Bio'
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: 'Bio',
@@ -105,14 +105,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: Colors.white)))),
-        Align(
+        Align( //Adiciona a descrição do usuário
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
                 text: widget.user.description, //Descrição do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
-        SizedBox(
-            width: width * 0.9,
-            child: TextButton(
+
+        //Adiciona um botão para Editar Perfil
+        SizedBox( //Define um SizedBox para conectar o tamanho do botão a largura da tela
+            width: width * 0.9, //Tamanho do botão 90% da largura da tela
+            child: TextButton( //Cria um botão retangular com bordas arredondadas
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -125,22 +127,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
-              onPressed: () {
+              onPressed: () { //Função conectada ao botão Editar Perfil
                 // TODO Caminho para a tela Editar Perfil
               },
             )),
-        SizedBox(
+
+        //Adiciona um botão para ir para a página Meus Pets
+        SizedBox( //Define um SizedBox com 90% de largura da tela
             width: width * 0.9,
             child: TextButton(
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.white)),
-              child: Text('Meus Pets',
+              child: Text('Meus Pets', //Define o botão meus pets
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
-              onPressed: () {
+              onPressed: () { //Função conectada ao botão Meus Pets
                 // TODO Caminho para a tela Meus Pets
               },
             ))

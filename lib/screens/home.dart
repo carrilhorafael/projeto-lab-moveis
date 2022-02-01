@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                               // TODO send to login page
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                MaterialPageRoute( //Vai para a página de login
                                     builder: (context) => Login()),
                               );
                             },

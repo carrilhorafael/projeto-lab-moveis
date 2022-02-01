@@ -156,7 +156,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
     return size;
   }
 
-
+  //Declara os valores selecionados iniciais
   List<Animal?> _selectedAnimals = convertListType([], _animals);
   List<Object?> _selectedAnimals2 = convertListType2([], _racas);
   List<Tamanho?> _selectedAnimals3 = convertListType3([], _tamanhos);
@@ -174,7 +174,9 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
       final saved = await service.retrieve();
       if (saved != null) {
         setState(() {
-          searchSettings = saved;
+          searchSettings = saved; //Define as configurações de busca igual ao armazenado no firebase
+
+          //Define os valores selecionados nos widgets igual aos do firebase
           _currentSliderValue = saved.maxAge;
           _currentSliderValue2 = saved.maxDistance;
           _selectedAnimals = saved.species.map((e) => Animal(name: e)).toList();
@@ -200,21 +202,23 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
           children: <Widget>[
             Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Configurações de busca",
+                child: Text("Configurações de busca", //Define o título Configurações de busca
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 19))),
-            SizedBox(height: 25),
+
+            SizedBox(height: 25), //Espaçamento de 25 vertical
+
             //################################################################################################
             // Rounded blue MultiSelectDialogField
             //################################################################################################
             MultiSelectDialogField(
-              initialValue: _selectedAnimals,
-              items: _items,
-              title: Text("Tipo"),
-              selectedColor: Colors.black.withOpacity(1),
-              decoration: BoxDecoration(
+              initialValue: _selectedAnimals, //Valor inicial
+              items: _items, //items disponíveis
+              title: Text("Tipo"), //Título do widget
+              selectedColor: Colors.black.withOpacity(1), //Cor de seleção
+              decoration: BoxDecoration( //Decoração do botão
                 color: Colors.white.withOpacity(1),
                 borderRadius: BorderRadius.all(Radius.elliptical(40, 12)),
                 border: Border.all(
@@ -222,22 +226,24 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                   width: 2,
                 ),
               ),
-              buttonIcon: Icon(
+              buttonIcon: Icon( //Estilo do ícone
                 Icons.pets,
                 color: Colors.black,
               ),
-              buttonText: Text(
+              buttonText: Text( //Texto do botão
                 "Tipo",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-              onConfirm: (results) {
+              onConfirm: (results) { //Função acionada ao confirmar a seleção
+
+                //Coloca os valores selecionados na variável de seleção atual
                 _selectedAnimals = results as List<Animal?>;
               },
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 50), //Espaçamento de 50
             //################################################################################################
             // This MultiSelectBottomSheetField has no decoration, but is instead wrapped in a Container that has
             // decoration applied. This allows the ChipDisplay to render inside the same Container.
@@ -437,6 +443,8 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),
+
+                  //Função acionada ao apertar o botão Salvar
                   onPressed: () async { //Função assincrona para salvar as informações no firebase
                     Set<String> speciesSet = {};
                     Set<String> raceSet = {};
@@ -469,14 +477,14 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                     }
 
                     //settingsRaca = _selectedAnimals2 as <Raca?>;
-                    searchSettings.sizes = sizeSet;
-                    searchSettings.species = speciesSet;
-                    searchSettings.races = raceSet;
+                    searchSettings.sizes = sizeSet; //Salva o conjunto de tamanho nas configurações de busca
+                    searchSettings.species = speciesSet; //Salva o conjunto de espécies nas configurações de busca
+                    searchSettings.races = raceSet; //Salva o conjunto de raças nas configurações de busca
                     //print(settingsRaca);
-                    searchSettings.maxAge = _currentSliderValue;
-                    searchSettings.maxDistance = _currentSliderValue2;
+                    searchSettings.maxAge = _currentSliderValue; //Salva a idade máxima
+                    searchSettings.maxDistance = _currentSliderValue2; //Salva a máxima distância
 
-                    await ref
+                    await ref //Salva as configurações de busca no firebase
                         .watch(petSearchServiceProvider)
                         .save(searchSettings);
                   },
