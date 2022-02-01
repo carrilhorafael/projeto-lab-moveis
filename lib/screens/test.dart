@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/home.dart';
 

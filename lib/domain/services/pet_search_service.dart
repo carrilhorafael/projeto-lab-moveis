@@ -21,7 +21,6 @@ class PetSearchService {
   // NOTE Should we guarantee that this service only shows a pet once per user?
   Future<List<Pet>> searchMore(SearchOptions options,
       {int maxAmount = 10}) async {
-    // TODO filter by distance!
     var query = petService
         .query()
         .limit(maxAmount)
@@ -33,6 +32,7 @@ class PetSearchService {
       "race": options.races,
     };
 
+    // Other fields
     whereFields.forEach((key, fieldSet) {
       if (fieldSet.isNotEmpty) {
         query = query.where(key, whereIn: fieldSet.toList());

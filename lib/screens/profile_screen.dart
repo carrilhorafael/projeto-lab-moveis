@@ -2,10 +2,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
-import 'package:projeto_lab/domain/entities/location/address.dart';
-import 'package:projeto_lab/domain/entities/location/state.dart'
-    as AddressState;
-import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/my_pets.dart';
 

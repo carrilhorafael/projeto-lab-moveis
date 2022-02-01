@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/domain/entities/Interest.dart';
-import 'package:projeto_lab/domain/entities/pet.dart';
-import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
-import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 import 'package:projeto_lab/domain/services/auth_service.dart';
-import 'package:projeto_lab/domain/services/interest_service.dart';
 import '../providers.dart';
-// import 'package:flutter_riverpod/src/consumer.dart';
 
 class Card {
     final String name;
@@ -17,7 +12,7 @@ class Card {
     final String breed;
     final String description;
     final String petId;
-    final AssetImage image;
+    final ImageProvider<Object> image;
 
     Card({required this.name, required this.age, required this.breed, required this.description, required this.image, required this.petId});
 }
@@ -39,17 +34,17 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
     super.initState();
 
     void addAnimalCards() async {
-      // final petService = ref.read(petServiceProvider);
+      final petService = ref.read(petServiceProvider);
       final searchService = ref.read(petSearchServiceProvider);
       final _pets = await searchService.searchMore(await searchService.retrieve());
 
       // loop animals and build Cards
       final interestService = ref.read(interestServiceProvider);
       for (int i = 0; i < _pets.length; i++) {
-        // final imageUrl = await petService.fetchImagesURL(_pets[0].id);
-        // final image = Image.network(imageUrl[0]);
+        final imageUrl = await petService.fetchImagesURL(_pets[0].id);
+        final image = imageUrl == [] ? Image.network(imageUrl[0]).image : AssetImage('images/petHomeScreen.png');
         _swipeItems.add(SwipeItem(
-            content: Card(name: _pets[i].name, age: _pets[i].age, breed: _pets[i].race, description: _pets[i].description, image: AssetImage('images/petHomeScreen.png'), petId: _pets[i].id),
+            content: Card(name: _pets[i].name, age: _pets[i].age, breed: _pets[i].race, description: _pets[i].description, image: image, petId: _pets[i].id),
             likeAction: () async {
               await interestService.add(Interest(petId: _pets[i].id, userId: AuthService.currentUser()!.id, status: Status.accepted)); // Create interest if liked
             },
