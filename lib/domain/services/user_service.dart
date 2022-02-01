@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,8 +14,12 @@ class UserService {
   UserService(this.store);
 
   Future<void> create(User user) async {
-    final docRef = await collection().add(user);
-    user.id = docRef.id;
+    if (user.id == "") {
+      final docRef = await collection().add(user);
+      user.id = docRef.id;
+    } else {
+      await collection().doc(user.id).set(user);
+    }
   }
 
   Future<User> find(String id) async {
@@ -44,5 +52,18 @@ class UserService {
 
   Future<void> delete(String id) {
     return collection().doc(id).delete();
+  }
+
+  Reference _userImage(String id) {
+    return FirebaseStorage.instance.ref('user_images').child('/$id.png');
+  }
+
+  Future<String> uploadImage(String id, File file) async {
+    final result = await _userImage(id).putFile(file);
+    return result.ref.getDownloadURL();
+  }
+
+  Future<String> fetchImageURL(String id) {
+    return _userImage(id).getDownloadURL();
   }
 }

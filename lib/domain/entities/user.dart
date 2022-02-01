@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
+
 import 'location/address.dart';
 
 class User {
@@ -9,6 +11,8 @@ class User {
   String email;
   String phone;
   String description;
+  String playerID;
+  Position? position;
 
   User({
     this.id = "",
@@ -17,6 +21,7 @@ class User {
     required this.email,
     required this.phone,
     this.description = "",
+    this.playerID = "",
   });
 
   Map<String, dynamic> toMap() {
@@ -26,18 +31,27 @@ class User {
       'email': email,
       'phone': phone,
       'description': description,
+      'playerID':playerID,
+      'position': position?.toJson(),
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+    final user = User(
       id: map['id'] ?? "",
       name: map['name'],
       address: Address.fromMap(map['address']),
       email: map['email'],
       phone: map['phone'],
       description: map['description'],
+      playerID: map['playerID'],
     );
+    final position = map['position'];
+
+    if (position != null) {
+      user.position = Position.fromMap(position);
+    }
+    return user;
   }
 
   String toJson() => json.encode(toMap());

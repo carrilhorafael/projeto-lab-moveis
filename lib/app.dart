@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'screens/test.dart';
 import 'screens/home.dart';
 
-class AppContent extends StatelessWidget {
-  const AppContent({
+class App extends StatelessWidget {
+  const App({
     Key? key,
   }) : super(key: key);
 
@@ -27,7 +29,7 @@ class AppContent extends StatelessWidget {
           fontFamily: 'BrunoAce',
           //primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'PeTinder'),
+        home: kReleaseMode ? HomePage(title: 'PeTinder') : TestPage(),
       ),
     );
   }
