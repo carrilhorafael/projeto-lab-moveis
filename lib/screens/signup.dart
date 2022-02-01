@@ -14,6 +14,7 @@ import 'components/main_dropdown.dart';
 import 'components/main_text_area.dart';
 import 'components/main_text_input.dart';
 
+// DESCRIPTION: Widget da tela do formulário de cadastro de novos usuários
 class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,6 @@ class SignupPage extends StatelessWidget {
             child: SingleChildScrollView(
           child: Column(children: <Widget>[
             Text("Entre com suas contas"),
-            Row(children: <Widget>[
-              //TODO Botões de Login com Google e Facebook
-            ]),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Center(child: Text("OU"))),
