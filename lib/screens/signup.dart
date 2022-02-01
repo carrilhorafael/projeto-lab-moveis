@@ -33,6 +33,7 @@ class SignupPage extends StatelessWidget {
   }
 }
 
+// Widget do formulário de cadastro de usuárop. Widget do tipo stateful.
 class SignupForm extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -40,6 +41,8 @@ class SignupForm extends ConsumerStatefulWidget {
   }
 }
 
+// Estado do formulário captura os campos para cadastro de usuário
+// 
 class _SignUpFormState extends ConsumerState<SignupForm> {
   final _teName = TextEditingController();
   final _teEmail = TextEditingController();
@@ -57,6 +60,7 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    // Criação de itens do dropdown de UFs e suas abreviações
     final _states = Location.State.validStates.map((e) {
       return DropdownMenuItem<Location.State>(
         child: Text("${e.name} / ${e.abbreviation}"),
@@ -65,7 +69,9 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
     }).toList();
 
     final authService = ref.watch(authServiceProvider);
-
+    // Metodo dedicado a instancia um usuário localmente
+    // e enviar a instancia para o back-end atraves do metodo
+    // authService.register()
     void _submit() {
       final User user = User(
           email: _teEmail.text,
@@ -83,6 +89,8 @@ class _SignUpFormState extends ConsumerState<SignupForm> {
         await userService.uploadImage(user.id, File(_imagePath!));
         assert(AuthService.currentUser() != null);
 
+        // Ao realizar a requisição, é feita a navegação para a tela de 
+        // TabView.
         Navigator.pop(context);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => TabView()));
