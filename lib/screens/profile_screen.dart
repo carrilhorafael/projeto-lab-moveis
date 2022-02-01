@@ -8,8 +8,9 @@ import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
+  //Classe para mostrar o perfil de usuário
   final User user;
-
+  //Recebe como argumento o usuário atual
   ProfilePage(this.user, {Key? key}) : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   String? _url;
   @override
   void initState() {
+    //Declara o estado inicial puxando a imagem de usuário do firebase
     super.initState();
 
     final service = ref.read(userServiceProvider);
@@ -33,6 +35,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   @override
+  //Constrói o Widget
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
@@ -47,7 +50,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
+                  image: DecorationImage( //DecorationImage para mostrar a imagem
                     image: _url != null
                         ? Image.network(_url!).image
                         : AssetImage('images/userProfilePic.jpg'),
@@ -59,7 +62,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           SizedBox(width: 10),
           Align(
               alignment: Alignment.centerLeft,
-              child: Text(widget.user.name,
+              child: Text(widget.user.name, //Nome do usuário
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -77,7 +80,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: widget.user.email,
+                text: widget.user.email, //Email do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(height: 25),
         Align(
@@ -91,7 +94,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: widget.user.phone,
+                text: widget.user.phone, //Telefone do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(height: 25),
         Align(
@@ -105,7 +108,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(TextSpan(
-                text: widget.user.description,
+                text: widget.user.description, //Descrição do usuário
                 style: TextStyle(fontSize: 14, color: Colors.white)))),
         SizedBox(
             width: width * 0.9,

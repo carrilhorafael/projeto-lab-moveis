@@ -6,6 +6,12 @@ import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/providers.dart';
 
+//Página para configuração de busca do aplicativo
+//Utiliza widgets de multipla seleção para selecionar a raça e tamanho dos animais
+//desejados e widgets do tipo slider para selecionar a idade e a distância de busca
+
+
+//Classe Raça para adicionar no widget
 class Raca {
   final String name;
 
@@ -14,6 +20,7 @@ class Raca {
   });
 }
 
+//Classe do tamanho do animal para adicionar no widget
 class Tamanho {
   final String name;
   Size size;
@@ -23,6 +30,7 @@ class Tamanho {
   });
 }
 
+//Classe para adicionar as espécies no widget
 class Animal {
   final String name;
 
@@ -51,15 +59,18 @@ class SearchSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
+  //Declara uma configuração de busca inicial
   SearchOptions searchSettings = SearchOptions(maxAge: 2, maxDistance: 5);
   double _currentSliderValue = 2;
   double _currentSliderValue2 = 5;
 
+  //Declara as espécies de animais disponíveis
   static List<Animal> _animals = [
     Animal(name: "Cachorro"),
     Animal(name: "Gato"),
   ];
 
+  //Define as raças disponíveis
   static List<Raca> _racas = [
     Raca(name: "Raça 1"),
     Raca(name: "Raça 2"),
@@ -69,23 +80,29 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
     Raca(name: "Raça 6"),
   ];
 
+  //Define os tamanhos
   static List<Tamanho> _tamanhos = [
     Tamanho(name: "Pequeno", size: Size.small),
     Tamanho(name: "Médio", size: Size.medium),
     Tamanho(name: "Grande", size: Size.big),
   ];
 
+  //Mapeia as espécies para um item do widget
   final _items = _animals
       .map((animal) => MultiSelectItem<Animal?>(animal, animal.name))
       .toList();
 
+  //Mapeia as raças para um item do Widget
   final _itemsracas =
       _racas.map((raca) => MultiSelectItem<Raca?>(raca, raca.name)).toList();
 
+  //Mapeia os tamanhos para um item do Widget
   final _itemstamanhos = _tamanhos
       .map((tamanho) => MultiSelectItem<Tamanho?>(tamanho, tamanho.name))
       .toList();
 
+
+  //Converte a lista salva pelo firebase em uma lista entendida pelo widget
   static List<Animal?> convertListType(
       List<String> listSpecie, List<Animal?> animals) {
     List<Animal?> species = [];
@@ -100,6 +117,8 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
     return species;
   }
 
+
+  //Converte a lista de raças em uma lista entendida pelo widget
   static List<Object?> convertListType2(
       List<String> listRace, List<Raca?> racas) {
     List<Object?> races = [];
@@ -115,6 +134,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
     return races;
   }
 
+  //Converte a lista de tamanhos em uma lista enetndida pelo widget
   static List<Tamanho?> convertListType3(
       List<Size?> listTamanho, List<Tamanho?> tamanhos) {
     List<Tamanho?> size = [];
@@ -136,6 +156,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
     return size;
   }
 
+
   List<Animal?> _selectedAnimals = convertListType([], _animals);
   List<Object?> _selectedAnimals2 = convertListType2([], _racas);
   List<Tamanho?> _selectedAnimals3 = convertListType3([], _tamanhos);
@@ -144,6 +165,8 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
 
   @override
   void initState() {
+    //Lê os estados iniciais da configuração de busca no firebase através
+    //de uma função assíncrona
     super.initState();
 
     () async {
@@ -165,6 +188,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
   }
 
   @override
+  //Constrói o widget
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
@@ -310,38 +334,6 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                 ])),
             SizedBox(height: 40)
 
-            /*,
-              //################################################################################################
-              // MultiSelectChipField
-              //################################################################################################
-              MultiSelectChipField(
-                items: _items,
-                //initialValue: [_animals[4], _animals[7], _animals[9]],
-                title: Text("Animals"),
-                headerColor: Colors.blue.withOpacity(0.5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 1.8),
-                ),
-                selectedChipColor: Colors.blue.withOpacity(0.5),
-                selectedTextStyle: TextStyle(color: Colors.blue[800]),
-                onTap: (values) {
-                  //_selectedAnimals4 = values;
-                },
-              ),
-              SizedBox(height: 40)
-      
-              ,
-              //################################################################################################
-              // MultiSelectDialogField with initial values
-              //################################################################################################
-              MultiSelectDialogField(
-                onConfirm: (val) {
-                  _selectedAnimals5 = val as List<Animal>;
-                },
-                items: _items,
-                initialValue:
-                _selectedAnimals5, // setting the value of this in initState() to pre-select values.
-              )*/
             ,
             SizedBox(height: 20),
             Align(
@@ -445,7 +437,7 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),
-                  onPressed: () async {
+                  onPressed: () async { //Função assincrona para salvar as informações no firebase
                     Set<String> speciesSet = {};
                     Set<String> raceSet = {};
                     Set<Size> sizeSet = {};
