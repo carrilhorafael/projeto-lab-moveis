@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
+import 'package:projeto_lab/domain/services/interest_service.dart';
 import 'package:projeto_lab/domain/services/pet_search_service.dart';
 import 'package:projeto_lab/domain/services/pet_service.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';
@@ -17,12 +18,14 @@ Future<void> main() async {
     late PetSearchService service;
     late PetService petService;
     late UserService userService;
+    late InterestService interestService;
 
     setUp(() async {
       fake = FakeFirebaseFirestore();
       userService = UserService(fake);
       petService = PetService(fake, userService);
-      service = PetSearchService(fake, petService);
+      interestService = InterestService(fake,petService,userService);
+      service = PetSearchService(fake, petService,interestService);
 
       SharedPreferences.setMockInitialValues({});
     });
@@ -35,7 +38,7 @@ Future<void> main() async {
 
       final options = SearchOptions(maxAge: 10, maxDistance: 20.0);
       await service.save(options);
-      final other = (await service.retrieve())!;
+      final other = (await service.retrieve());
 
       expect(other.maxAge, options.maxAge);
       expect(other.maxDistance, options.maxDistance);
