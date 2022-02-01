@@ -4,13 +4,15 @@ import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/domain/services/pet_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projeto_lab/domain/services/interest_service.dart';
 
 class PetSearchService {
   static const optionsKey = "options";
   final FirebaseFirestore store;
   final PetService petService;
+  final InterestService interestService;
 
-  PetSearchService(this.store, this.petService);
+  PetSearchService(this.store, this.petService, this.interestService);
 
   // NOTE Should we guarantee that this service only shows a pet once per user?
   Future<List<Pet>> searchMore(SearchOptions options,
@@ -33,10 +35,13 @@ class PetSearchService {
       }
     });
 
+    // Remove pets that have been matched with current user
+    final interestedIn = (await interestService.findInterests(AuthService.currentUser()!)).map((i) => i.petId).toList();
+
     final snapshot = await query.get();
     return snapshot.docs
         .map((e) => e.data())
-        .where((p) => p.ownerId != AuthService.currentUser()!.id)
+        .where((p) => p.ownerId != AuthService.currentUser()!.id && !interestedIn.contains(p.id))
         .toList();
   }
 

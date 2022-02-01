@@ -21,7 +21,8 @@ final petServiceProvider = Provider((ref) {
 
 final petSearchServiceProvider = Provider((ref) {
   final petService = ref.watch(petServiceProvider);
-  return PetSearchService(_store(), petService);
+  final interestService = ref.watch(interestServiceProvider); 
+  return PetSearchService(_store(), petService, interestService);
 });
 
 final interestServiceProvider = Provider((ref) {
