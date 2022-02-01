@@ -63,6 +63,8 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
   SearchOptions searchSettings = SearchOptions(maxAge: 2, maxDistance: 5);
   double _currentSliderValue = 2;
   double _currentSliderValue2 = 5;
+  double minAge = 0;
+  double maxAge = 100;
 
   //Declara as espécies de animais disponíveis
   static List<Animal> _animals = [
@@ -375,9 +377,9 @@ class _SearchSettingsPageState extends ConsumerState<SearchSettingsPage> {
                   valueIndicatorTextStyle: TextStyle(color: Colors.black),
                   thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8)),
               child: Slider(
-                value: _currentSliderValue,
-                min: 0,
-                max: 1000,
+                value: (_currentSliderValue <= maxAge ? _currentSliderValue : maxAge) >= minAge ? _currentSliderValue : minAge,
+                min: minAge,
+                max: maxAge,
                 divisions: 12,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {

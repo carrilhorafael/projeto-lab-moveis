@@ -55,7 +55,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   image: DecorationImage( //DecorationImage para mostrar a imagem
                     image: _url != null
                         ? Image.network(_url!).image
-                        : AssetImage('images/userProfilePic.jpg'), //Fornece o caminho da imagem
+                        : AssetImage('images/userProfilePic.png'), //Fornece o caminho da imagem
                     fit: BoxFit.cover,
                     repeat: ImageRepeat.noRepeat,
                   ),

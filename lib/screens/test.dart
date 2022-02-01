@@ -51,7 +51,7 @@ class TestPage extends ConsumerWidget {
                 onPressed: () {
                   final authService = ref.read(authServiceProvider);
                   authService
-                      .login("bruno@email.com", "supernenechi")
+                      .login("lauro@email.com", "labdisp")
                       .then((_) => print("loggado"));
                 }),
             TextButton(

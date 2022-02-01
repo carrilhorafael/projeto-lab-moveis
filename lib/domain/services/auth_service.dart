@@ -2,12 +2,14 @@
 /// do usuário. É possível logar, se cadastrar e obter o usuário atual do app.
 
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:geolocator/geolocator.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
     as AddressState;
 import 'package:projeto_lab/util/geo.dart';
+import 'package:geocoding/geocoding.dart';
 
 class AuthService {
   final FirebaseAuth auth;
@@ -67,8 +69,9 @@ class AuthService {
   Future<void> _updateCurrentUserPosition() async {
     if (_currentUser == null) return;
 
-    final position = await determinePosition();
-    _currentUser!.position = position;
+    // final position = await determinePosition();
+    Location possiblePlaces = (await locationFromAddress(_currentUser!.address.state.name+", "+_currentUser!.address.address + ", " + _currentUser!.address.complement))[0];
+    _currentUser!.position = Position(accuracy: 20,longitude: possiblePlaces.longitude,latitude: possiblePlaces.latitude,heading: 1.0,timestamp: DateTime.now(),speedAccuracy: 1,altitude: 0,speed: 0);
 
     await userService.update(_currentUser!);
   }

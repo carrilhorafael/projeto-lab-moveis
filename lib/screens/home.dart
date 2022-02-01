@@ -12,11 +12,8 @@ class BlocHomeOneSignal {
 //Função inicial que seta o AppId necessário para o OneSignal funcionar
   void initOneSignal() {
     OneSignal.shared.setAppId("76726102-6074-498c-a4fb-2dfd1db62961");
-
-
+    OneSignal().userProvidedPrivacyConsent();
   }
-
-
 }
 
 class HomePage extends StatefulWidget {

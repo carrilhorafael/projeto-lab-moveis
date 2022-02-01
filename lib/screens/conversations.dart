@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart' hide State;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
 import 'package:projeto_lab/domain/entities/Interest.dart';
-import 'package:projeto_lab/domain/entities/location/address.dart';
-import 'package:projeto_lab/domain/entities/location/state.dart';
 import 'package:projeto_lab/domain/entities/message.dart';
-import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
-import 'package:projeto_lab/domain/services/user_service.dart';
 import 'package:projeto_lab/providers.dart';
 import 'package:projeto_lab/screens/chat.dart';
 
@@ -49,10 +44,14 @@ class _ConversationsState extends ConsumerState<Conversations> {
         }
 
         for (final interest in interests) {
-          final pet = await petService.find(interest.petId);
-          final user = await userService.find(pet.ownerId);
+          try{
+            final pet = await petService.find(interest.petId);
+            final user = await userService.find(pet.ownerId);
 
-          users.add(user);
+            users.add(user);
+          }catch(e){
+            print(e);
+          }
         }
       }
 
@@ -101,10 +100,13 @@ class _ConversationsState extends ConsumerState<Conversations> {
                 child: ListView.builder(
                     itemCount: _interests.length,
                     itemBuilder: (context, index) {
-                      Interest interest = _interests[index];
+                      print(_interests.length);
+                      print(_users.length);
+                      print(index);
                       if (_lastMessages.length == 0 || _users.length == 0) {
                         return Text("Carregando ...");
                       }
+                      Interest interest = _interests[index];
 
                       Message lastMessage = _lastMessages[index];
                       return Container(
@@ -120,13 +122,13 @@ class _ConversationsState extends ConsumerState<Conversations> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Chat(interest, _users[index])));
+                                          Chat(interest, _users[index % 3])));
                             },
                             contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                             leading: CircleAvatar(
                               backgroundColor: Colors.grey,
                             ),
-                            title: Text(_users[index].name,
+                            title: Text(_users[index % 3].name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16)),
                             subtitle: Text(lastMessage.content,

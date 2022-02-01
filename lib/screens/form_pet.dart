@@ -18,8 +18,8 @@ class PetFormPage extends StatelessWidget {
         appBar: AppBar(),
         body: Container(
             margin: EdgeInsets.all(20.0),
-            child:
-                Column(children: <Widget>[Text("Adicionar Pet"), PetForm()])));
+            child: PetForm()
+                  ));
   }
 }
 // Widget do tipo stateful do fomulário de cadastro
@@ -80,7 +80,6 @@ class _PetFormState extends ConsumerState<PetForm> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-          Text("Crie uma conta"),
           ElevatedButton(
               onPressed: () async {
                 final picker = ImagePicker();
@@ -100,7 +99,7 @@ class _PetFormState extends ConsumerState<PetForm> {
           }),
           MainTextArea("Bio", "Fale um pouco sobre o pet", _teDescription),
           Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 86.0, 8.0, 8.0),
               child: ElevatedButton(
                   onPressed: () => _create(), child: const Text("Salvar"))),
         ])));
