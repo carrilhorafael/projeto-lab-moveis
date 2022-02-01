@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:projeto_lab/components/button.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
+import 'package:projeto_lab/screens/AnimalSearchPage.dart';
 import 'package:projeto_lab/screens/components/main_text_input.dart';
 
 import '../tab_view.dart';
@@ -63,11 +64,18 @@ class LoginState extends ConsumerState<Login> {
                                 try {
                                   final auth = ref.read(authServiceProvider);
                                   await auth.login(_teEmail.text, _tePass.text);
-                                  Navigator.push(
+
+                                  Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TabView()),
+                                    MaterialPageRoute(builder: (context) => TabView()),
+                                        (Route<dynamic> route) => false,
                                   );
+
+                                  //Navigator.push(
+                                   // context,
+                                    //MaterialPageRoute(
+                                      //  builder: (context) => TabView()),
+                                  //);
                                 } catch (e) {
                                   print(e);
                                   rethrow;

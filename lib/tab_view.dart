@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_lab/providers.dart';
+import 'package:projeto_lab/screens/AnimalSearchPage.dart';
 import 'package:projeto_lab/screens/conversations.dart';
 import 'package:projeto_lab/screens/search_settings.dart';
 import 'package:projeto_lab/screens/profile_screen.dart';
@@ -42,9 +43,9 @@ class _TabViewState extends ConsumerState<TabView> {
     return DefaultTabController(
       child: Scaffold(
         body: Background(
-          child: TabBarView(
+          child: TabBarView( physics: NeverScrollableScrollPhysics(),
             children: [
-              Center(child: Text('Animal Search')),
+              AnimalSearchPage(),
               SearchSettingsPage(),
               Conversations(),
               ProfilePage(AuthService.currentUser()!),

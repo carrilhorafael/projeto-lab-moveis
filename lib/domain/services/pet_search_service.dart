@@ -15,25 +15,27 @@ class PetSearchService {
   Future<List<Pet>> searchMore(SearchOptions options,
       {int maxAmount = 10}) async {
     // TODO filter by distance!
-    var query = petService
-        .query()
-        .limit(maxAmount)
-        .where("age", isLessThanOrEqualTo: options.maxAge);
 
-    final whereFields = {
-      "size": options.sizes,
-      "species": options.species,
-      "race": options.races,
-    };
+      var query = petService
+          .query()
+          .limit(maxAmount)
+          .where("age", isLessThanOrEqualTo: options.maxAge);
 
-    whereFields.forEach((key, fieldSet) {
-      if (fieldSet.isNotEmpty) {
-        query = query.where(key, whereIn: fieldSet.toList());
-      }
-    });
+      final whereFields = {
+        "size": options.sizes,
+        "species": options.species,
+        "race": options.races,
+      };
 
-    final snapshot = await query.get();
-    return snapshot.docs.map((e) => e.data()).toList();
+      whereFields.forEach((key, fieldSet) {
+        if (fieldSet.isNotEmpty) {
+          query = query.where(key, whereIn: fieldSet.toList());
+        }
+      });
+
+      final snapshot = await query.get();
+      return snapshot.docs.map((e) => e.data()).toList();
+
   }
 
   Future<void> save(SearchOptions options) async {

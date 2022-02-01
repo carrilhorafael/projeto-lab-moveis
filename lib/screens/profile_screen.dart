@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:projeto_lab/domain/entities/pet.dart';
+import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/entities/location/address.dart';
 import 'package:projeto_lab/domain/entities/location/state.dart'
@@ -21,10 +23,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    () async {
+      Pet pet = Pet(size: Size.small,ownerId: AuthService.currentUser()!.id,name:"Teste",description:"",species: "Dog",race: "Raca",age:5);
+      final petService = ref.read(petServiceProvider);
+      await petService.create(pet);
+      final searchService = ref.read(petSearchServiceProvider);
+      print("AQUI3");
+      final searchOptions = await searchService.retrieve();
+      if (searchOptions != null) {
+        print("AQUI");
+        final pets = await searchService.searchMore(SearchOptions(maxAge: 5, maxDistance: 10));
+        print(pets.length);
+      }
 
+    }();
     final service = ref.read(userServiceProvider);
     // ignore: unnecessary_statements
     () async {
+      print("AQUI4");
       final url = await service.fetchImageURL(widget.user.id);
       setState(() {
         this._url = url;
