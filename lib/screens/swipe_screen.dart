@@ -51,10 +51,10 @@ class _SwipeScreenState extends ConsumerState<SwipeScreen> {
         _swipeItems.add(SwipeItem(
             content: Card(name: _pets[i].name, age: _pets[i].age, breed: _pets[i].race, description: _pets[i].description, image: AssetImage('images/petHomeScreen.png'), petId: _pets[i].id),
             likeAction: () async {
-              await interestService.add(Interest(petId: _pets[i].id, userId: AuthService.currentUser()!.id, status: Status.accepted));
+              await interestService.add(Interest(petId: _pets[i].id, userId: AuthService.currentUser()!.id, status: Status.accepted)); // Create interest if liked
             },
             superlikeAction: () async {
-              await interestService.add(Interest(petId: _pets[i].id,userId: AuthService.currentUser()!.id, status: Status.accepted));
+              await interestService.add(Interest(petId: _pets[i].id,userId: AuthService.currentUser()!.id, status: Status.accepted)); // Create interest if liked
               // same as like?
             },
             // nopeAction: () {
