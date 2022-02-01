@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'PeTinder',
         theme: ThemeData(
           // This is the theme of your application.
           //
