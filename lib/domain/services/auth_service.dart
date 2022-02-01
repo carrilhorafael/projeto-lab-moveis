@@ -1,3 +1,6 @@
+/// Este Módulo contém `AuthService`, um serviço relacionado a operações de autenticação
+/// do usuário. É possível logar, se cadastrar e obter o usuário atual do app.
+
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:projeto_lab/domain/entities/user.dart';
 import 'package:projeto_lab/domain/services/user_service.dart';

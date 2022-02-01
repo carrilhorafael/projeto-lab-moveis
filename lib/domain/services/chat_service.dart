@@ -1,3 +1,6 @@
+/// Este Módulo contém `ChatService`, um serviço que permite o envio e a obtenção
+/// das mensagens do chat de um determinado interesse.
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 

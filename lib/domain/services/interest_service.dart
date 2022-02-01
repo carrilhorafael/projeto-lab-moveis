@@ -1,3 +1,6 @@
+/// Este Módulo contém `InterestService`, um serviço que contém as operações CRUD
+/// de um interesse, além de permitir obter os interesses de um pet ou de um usuário.
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_lab/domain/entities/Interest.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';

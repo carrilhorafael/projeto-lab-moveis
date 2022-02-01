@@ -1,3 +1,6 @@
+/// Este Módulo contém `UserService`, um serviço que oferece as operações CRUD para usuários,
+/// além da obtenção de sua imagem de perfil.
+
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';

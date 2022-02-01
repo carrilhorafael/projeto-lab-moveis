@@ -1,3 +1,7 @@
+/// Este Módulo contém `PetSearchService`, um serviço que é responsável por obter
+/// pets para serem sugeridos para adoção ao usuário atual, além de salvar e obter
+/// as configurações de busca do armazenamento local.
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_lab/domain/entities/pet.dart';
 import 'package:projeto_lab/domain/entities/pet_search/search_options.dart';
