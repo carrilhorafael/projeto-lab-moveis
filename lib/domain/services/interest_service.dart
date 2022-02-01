@@ -47,6 +47,21 @@ class InterestService {
   }
 
   Future<void> add(Interest interest) {
+    //Adiciona o match no Firebase e notifica o dono do Pet através do OneSignal
+    ()async {
+      Pet currentPet = await petService.find(interest.petId);
+      User ownerPet = await userService.find(currentPet.ownerId);
+      User user = await userService.find(interest.userId);
+
+      OneSignal.shared.postNotification(OSCreateNotification(
+        androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
+        playerIds: [ownerPet.playerID],
+        content: "Você tem um novo match. ${user.name} curtiu o seu Pet.",
+        heading: "Novo Match",
+
+
+      ));
+    }();
     return collection().add(interest);
   }
 
@@ -60,23 +75,6 @@ class InterestService {
         .update({'status': enumToString(newStatus)});
     interest.status = newStatus;
 
-    if (newStatus == Status.accepted) {
-      Pet currentPet = await petService.find(interest.petId);
-      User ownerPet = await userService.find(currentPet.ownerId);
-      User currentUser = AuthService.currentUser()!;
-      User userNotification = currentUser;
-      if (interest.userId != currentUser.id) {
-        userNotification = await userService.find(interest.userId);
-      }
-      OneSignal.shared.postNotification(OSCreateNotification(
-        androidChannelId: "c589b224-348e-4fad-ad43-21198120a26b",
-        playerIds: [userNotification.playerID, ownerPet.playerID],
-        content: "Você tem um novo match!",
-        heading: "Interesse",
-
-
-      ));
-    }
   }
 
   Future<void> remove(String id) {
