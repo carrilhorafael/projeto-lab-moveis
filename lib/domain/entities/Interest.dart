@@ -1,3 +1,6 @@
+/// Este Módulo contém `Interest`, que representa um match/interesse entre um
+/// usuário e um pet, interligando o interessado com o dono.
+
 import 'dart:convert';
 
 import 'package:projeto_lab/util/enum.dart';

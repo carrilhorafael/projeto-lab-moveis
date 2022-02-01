@@ -1,3 +1,7 @@
+/// Este Módulo contém `SearchOptions`, que representa as configurações de busca
+/// que um usuário interessado em adotar um pet pode definir para filtrar
+/// as opções possíveis.
+
 import 'dart:convert';
 
 import 'package:projeto_lab/domain/entities/pet.dart';

@@ -1,6 +1,8 @@
+/// Este Módulo contém `State`, que representa um estado do Brasil. Apenas
+/// estados válidos podem ser representados.
+
 import 'dart:convert';
 
-// TODO add helper methods to list the available states.
 class State {
   final String name;
   final String abbreviation;

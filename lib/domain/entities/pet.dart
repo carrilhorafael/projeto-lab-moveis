@@ -1,3 +1,5 @@
+/// Este Módulo contém `Pet`, que representa um animal a ser adotado.
+
 import 'dart:convert';
 
 import 'package:projeto_lab/util/enum.dart';
