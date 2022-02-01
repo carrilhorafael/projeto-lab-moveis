@@ -10,6 +10,7 @@ import 'components/main_text_input.dart';
 import 'package:projeto_lab/domain/services/auth_service.dart';
 import 'package:projeto_lab/providers.dart';
 
+// DESCRIPTION: Widget da página de formulário de criação de novos pets atrelados ao usuário logado.
 class PetFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class PetFormPage extends StatelessWidget {
                 Column(children: <Widget>[Text("Adicionar Pet"), PetForm()])));
   }
 }
-
+// Widget do tipo stateful do fomulário de cadastro
 class PetForm extends ConsumerStatefulWidget {
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -29,6 +30,9 @@ class PetForm extends ConsumerStatefulWidget {
   }
 }
 
+// Estado do formulário de cadastro, contem os campos
+// para instancia um modelo de Pet localmente que será
+// enviado para o serviõ do firebase
 class _PetFormState extends ConsumerState<PetForm> {
   final _teName = TextEditingController();
   final _teAge = TextEditingController();
@@ -41,6 +45,7 @@ class _PetFormState extends ConsumerState<PetForm> {
 
   @override
   Widget build(BuildContext context) {
+    // Criação da lista de  itens do dropdown de tamanhos
     final _sizes = Size.values.map((Size e) {
       return DropdownMenuItem<Size>(
         child: Text("${describeEnum(e)}"),
@@ -49,7 +54,8 @@ class _PetFormState extends ConsumerState<PetForm> {
     }).toList();
 
     final petService = ref.watch(petServiceProvider);
-
+    // Metodo que cria uma instancia de Pet e envia para
+    // o back-end utilizando petService.create()
     void _create() {
       final Pet pet = new Pet(
         ownerId: AuthService.currentUser()!.id,
